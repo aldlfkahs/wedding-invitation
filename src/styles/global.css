@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Stylish', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    background: linear-gradient(180deg, #FFF5F7 0%, #FFE4E9 50%, #E8D5F2 100%);
+    background-attachment: fixed;
+    color: #333;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* 텍스트 드래그 방지 */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 100%);
+    border-bottom: 1px solid rgba(255, 182, 193, 0.2);
+}
+
+.header h1 {
+    font-size: 2.2rem;
+    color: #8B4789;
+    margin-bottom: 25px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+/* Invitation Message Styles */
+.invitation-message {
+    padding: 50px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+}
+
+.invitation-message h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #8B4789;
+    font-weight: 800;
+}
+
+.invitation-message p {
+    margin: 12px 0;
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Photo modal은 PhotoModal.css에서 관리 */
+
+
+/* Location Styles */
+.location {
+    padding: 50px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+}
+
+.location h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 35px;
+    color: #8B4789;
+    font-weight: 800;
+}
+
+.location-info {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.location-info h3 {
+    font-size: 1.4rem;
+    margin: 25px 0 15px;
+    color: #8B4789;
+    font-weight: 700;
+}
+
+.location-info p {
+    margin: 10px 0;
+    color: #666;
+    font-size: 1.05rem;
+}
+
+.map {
+    margin: 25px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.map iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+}
+
+.directions {
+    margin-top: 35px;
+}
+
+.naver-map-button {
+    display: inline-block;
+    margin: 20px 0;
+    padding: 14px 30px;
+    background: #03C75A;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-align: center;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(3, 199, 90, 0.3);
+}
+
+.naver-map-button:hover {
+    background: #02B350;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(3, 199, 90, 0.4);
+}
+
+/* 지도 버튼 스타일 */
+.map-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.kakao-button {
+    background: #FEE500;
+    color: #000000;
+    box-shadow: 0 2px 8px rgba(254, 229, 0, 0.3);
+}
+
+.kakao-button:hover {
+    background: #FFDD00;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);
+}
+
+.naver-button {
+    background: #03C75A;
+    color: white;
+    box-shadow: 0 2px 8px rgba(3, 199, 90, 0.3);
+}
+
+.naver-button:hover {
+    background: #02B350;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(3, 199, 90, 0.4);
+}
+
+/* Account Info Styles */
+.account-info {
+    padding: 50px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    margin: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+}
+
+.account-info h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #8B4789;
+    font-weight: 800;
+}
+
+.account-info h3 {
+    font-size: 1.4rem;
+    color: #8B4789;
+    font-weight: 700;
+}
+
+.account-info ul {
+    list-style: none;
+    padding: 0;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.account-info li {
+    padding: 18px;
+    margin: 10px 0;
+    background: linear-gradient(135deg, #FFF5F7 0%, #FFE4E9 100%);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(139, 71, 137, 0.1);
+    transition: all 0.3s;
+}
+
+.account-info li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 71, 137, 0.2);
+}
+
+.account-info li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 71, 137, 0.2);
+}
+
+/* Share Buttons Styles */
+.share-buttons {
+    padding: 50px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    margin: 20px 20px 40px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+}
+
+.share-buttons h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #8B4789;
+    font-weight: 800;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .invitation-message h2,
+    .location h2,
+    .account-info h2,
+    .share-buttons h2 {
+        font-size: 1.6rem;
+    }
+    
+    .invitation-message,
+    .location,
+    .account-info,
+    .share-buttons {
+        margin: 15px;
+    }
+}

@@ -1,0 +1,11 @@
+:root {
+    --primary-color: #ff6f61; /* Main color for the wedding theme */
+    --secondary-color: #f7cac9; /* Secondary color for accents */
+    --background-color: #ffffff; /* Background color for the app */
+    --text-color: #333333; /* Default text color */
+    --header-font: 'Georgia', serif; /* Font for headers */
+    --body-font: 'Arial', sans-serif; /* Font for body text */
+    --border-radius: 8px; /* Standard border radius for buttons and cards */
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Standard box shadow */
+    --transition-speed: 0.3s; /* Standard transition speed for animations */
+}

@@ -1,0 +1,26 @@
+.header {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 100%);
+    border-bottom: 1px solid rgba(255, 182, 193, 0.2);
+}
+
+.header h1 {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 2.2rem;
+    color: #8B4789;
+    margin-bottom: 25px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.wedding-details {
+    font-size: 1.15rem;
+    color: #666;
+    line-height: 2;
+    font-family: 'Stylish', sans-serif;
+}
+
+.wedding-details p {
+    margin: 10px 0;
+}

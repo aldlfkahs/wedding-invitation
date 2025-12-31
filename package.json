@@ -1,0 +1,35 @@
+{
+  "homepage": "https://aldlfkahs.github.io/wedding-invitation",
+  "name": "wedding-invitation",
+  "version": "1.0.0",
+  "description": "A mobile wedding invitation application built with React.",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^1.0.0",
+    "typescript": "^4.0.0",
+    "vite": "^2.0.0"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "react",
+    "mobile"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
