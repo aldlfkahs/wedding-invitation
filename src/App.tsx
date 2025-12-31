@@ -20,7 +20,7 @@ const App: React.FC = () => {
     const loadPhotos = async () => {
       const photoList: string[] = [];
       for (let i = 1; i <= 100; i++) {
-        const path = `/images/${i}.jpg`;
+        const path = `${import.meta.env.BASE_URL}images/${i}.jpg`;
         try {
           const response = await fetch(path, { method: 'HEAD' });
           if (response.ok) {
