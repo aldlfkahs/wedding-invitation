@@ -15,23 +15,28 @@ const App: React.FC = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [nextPhotoIndex, setNextPhotoIndex] = useState<number | null>(null);
 
-  // Load photos on mount
+  // Load photos on mount - images 폴더의 실제 이미지만 불러오기
   useEffect(() => {
-    const loadPhotos = async () => {
-      const photoList: string[] = [];
-      for (let i = 1; i <= 100; i++) {
-        const path = `${import.meta.env.BASE_URL}images/${i}.jpg`;
-        try {
-          const response = await fetch(path, { method: 'HEAD' });
-          if (response.ok) {
-            photoList.push(path);
-          }
-        } catch {
-          if (photoList.length > 0 && i > photoList.length + 5) break;
-        }
-      }
+    const loadPhotos = () => {
+      // Vite의 import.meta.glob으로 public/images 폴더의 모든 이미지 파일 가져오기
+      const imageModules = import.meta.glob('/public/images/*.{jpg,jpeg,png,gif,webp}', { eager: true, as: 'url' });
+      
+      // 파일 경로를 URL로 변환하고 정렬
+      const photoList = Object.keys(imageModules)
+        .map(path => {
+          // '/public/images/1.jpg' -> '/images/1.jpg'
+          return path.replace('/public', import.meta.env.BASE_URL.replace(/\/$/, ''));
+        })
+        .sort((a, b) => {
+          // 파일명에서 숫자 추출하여 정렬
+          const numA = parseInt(a.match(/(\d+)\.\w+$/)?.[1] || '0');
+          const numB = parseInt(b.match(/(\d+)\.\w+$/)?.[1] || '0');
+          return numA - numB;
+        });
+      
       setPhotos(photoList);
     };
+    
     loadPhotos();
   }, []);
 

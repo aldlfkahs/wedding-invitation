@@ -120,6 +120,16 @@
     font-weight: bold;
     cursor: pointer;
     z-index: 10000;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.close.visible {
+    opacity: 1;
+}
+
+.close.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .close:hover,
@@ -135,6 +145,16 @@
     justify-content: space-between;
     transform: translateY(-50%);
     z-index: 10000;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.navigation.visible {
+    opacity: 1;
+}
+
+.navigation.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .navigation button {
