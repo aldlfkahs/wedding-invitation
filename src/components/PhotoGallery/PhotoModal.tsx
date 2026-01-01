@@ -27,7 +27,7 @@ const PhotoModal: React.FC<PhotoModalProps> = ({ photo, nextPhoto, onClose, onNe
         }
         hideTimeoutRef.current = setTimeout(() => {
             setShowControls(false);
-        }, 2000);
+        }, 1000);
     };
 
     // 컴포넌트 마운트 시 타이머 시작

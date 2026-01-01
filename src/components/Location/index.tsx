@@ -10,10 +10,23 @@ const Location: React.FC = () => {
     const mapRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!mapRef.current || !window.naver) return;
+        if (!mapRef.current) {
+            console.log('Map container not found');
+            return;
+        }
 
-        // 더컨벤션 송파문정 좌표
-        const location = new window.naver.maps.LatLng(37.4842, 127.1043);
+        // 네이버 지도 스크립트 로딩 대기
+        const initMap = () => {
+            if (!window.naver || !window.naver.maps) {
+                console.error('Naver Maps API not loaded');
+                return;
+            }
+
+            try {
+                console.log('Initializing Naver Map...');
+                
+                // 더컨벤션 송파문정 좌표 (서울 송파구 문정동 651-8)
+                const location = new window.naver.maps.LatLng(37.484123, 127.122752);
 
         const mapOptions = {
             center: location,
@@ -43,22 +56,46 @@ const Location: React.FC = () => {
             `,
         });
 
-        // 마커 클릭시 정보창 표시
-        window.naver.maps.Event.addListener(marker, 'click', () => {
-            if (infoWindow.getMap()) {
-                infoWindow.close();
-            } else {
-                infoWindow.open(map, marker);
+                // 마커 클릭시 정보창 표시
+                window.naver.maps.Event.addListener(marker, 'click', () => {
+                    if (infoWindow.getMap()) {
+                        infoWindow.close();
+                    } else {
+                        infoWindow.open(map, marker);
+                    }
+                });
+
+                console.log('Naver Map initialized successfully');
+            } catch (error) {
+                console.error('Error initializing map:', error);
             }
-        });
+        };
+
+        // 네이버 지도 API가 로드될 때까지 대기
+        if (window.naver && window.naver.maps) {
+            initMap();
+        } else {
+            const checkInterval = setInterval(() => {
+                if (window.naver && window.naver.maps) {
+                    clearInterval(checkInterval);
+                    initMap();
+                }
+            }, 100);
+
+            // 10초 후에도 로드 안되면 타임아웃
+            setTimeout(() => {
+                clearInterval(checkInterval);
+                console.error('Naver Maps API loading timeout');
+            }, 10000);
+        }
     }, []);
 
     const openKakaoMap = () => {
-        window.open('https://map.kakao.com/link/map/더컨벤션 송파문정,37.4842,127.1043', '_blank');
+        window.open('https://map.kakao.com/link/map/더컨벤션 송파문정,37.484123,127.122752', '_blank');
     };
 
     const openNaverMap = () => {
-        window.open('https://map.naver.com/v5/search/더컨벤션 송파문정', '_blank');
+        window.open('https://map.naver.com/p/search/%EB%8D%94%EC%BB%A8%EB%B2%A4%EC%85%98%20%EC%86%A1%ED%8C%8C%EB%AC%B8%EC%A0%95/place/1958047921?c=15.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202601011454&locale=ko&svcName=map_pcv5&searchText=%EB%8D%94%EC%BB%A8%EB%B2%A4%EC%85%98%20%EC%86%A1%ED%8C%8C%EB%AC%B8%EC%A0%95', '_blank');
     };
 
     return (
@@ -67,7 +104,7 @@ const Location: React.FC = () => {
             <div className="location-info">
                 <h3>예식장 정보</h3>
                 <p><strong>더컨벤션 송파문정</strong></p>
-                <p><strong>주소:</strong> 서울특별시 송파구 문정동</p>
+                <p><strong>주소:</strong> 서울 송파구 문정동 651-8 (NH송파농협 11층)</p>
                 <p><strong>전화:</strong> 000-0000-0000</p>
                 
                 <div className="map">
