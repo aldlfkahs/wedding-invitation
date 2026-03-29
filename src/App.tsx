@@ -111,7 +111,11 @@ const App: React.FC = () => {
       </section>
 
       <section className="snap-section">
-        <Location />
+        <Location mode="map" />
+      </section>
+
+      <section className="snap-section">
+        <Location mode="directions" />
       </section>
 
       <section className="snap-section">

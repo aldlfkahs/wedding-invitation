@@ -16,7 +16,6 @@ const AccountInfo: React.FC = () => {
                 <h3>신랑측 계좌</h3>
                 <ul>
                     <li onClick={() => copyToClipboard('123-456-789012', '계좌번호가')} style={{ cursor: 'pointer' }}>
-                        <strong>은행:</strong> [은행명을 입력하세요]<br/>
                         <strong>예금주:</strong> [예금주명을 입력하세요]<br/>
                         <strong>계좌번호:</strong> [계좌번호를 입력하세요]
                         <div style={{ fontSize: '0.85rem', color: '#888', marginTop: '5px' }}>클릭하여 복사</div>
@@ -26,7 +25,6 @@ const AccountInfo: React.FC = () => {
                 <h3 style={{ marginTop: '30px' }}>신부측 계좌</h3>
                 <ul>
                     <li onClick={() => copyToClipboard('987-654-321098', '계좌번호가')} style={{ cursor: 'pointer' }}>
-                        <strong>은행:</strong> [은행명을 입력하세요]<br/>
                         <strong>예금주:</strong> [예금주명을 입력하세요]<br/>
                         <strong>계좌번호:</strong> [계좌번호를 입력하세요]
                         <div style={{ fontSize: '0.85rem', color: '#888', marginTop: '5px' }}>클릭하여 복사</div>
