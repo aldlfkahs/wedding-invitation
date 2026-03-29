@@ -4,32 +4,80 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
+    height: 100%;
     margin: 0;
-    font-family: 'Stylish', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    font-family: 'Gowun Batang', 'Apple SD Gothic Neo', 'Malgun Gothic', serif;
     background: linear-gradient(180deg, #FFF5F7 0%, #FFE4E9 50%, #E8D5F2 100%);
     background-attachment: fixed;
     color: #333;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* 텍스트 드래그 방지 */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
-    font-family: 'Nanum Myeongjo', serif;
-    font-weight: 700;
+    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
+    font-weight: 600;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+}
+
+/* ===== Snap Scroll ===== */
+.snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.snap-container::-webkit-scrollbar {
+    display: none;
+}
+
+.snap-section {
+    height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.snap-section:first-child {
+    opacity: 1;
+    transform: none;
+}
+
+.snap-section.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .container {
@@ -38,66 +86,50 @@ a {
     padding: 0;
 }
 
-/* Header Styles */
-.header {
-    text-align: center;
-    padding: 50px 20px;
-    background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 100%);
-    border-bottom: 1px solid rgba(255, 182, 193, 0.2);
-}
-
-.header h1 {
-    font-size: 2.2rem;
-    color: #8B4789;
-    margin-bottom: 25px;
-    font-weight: 800;
-    letter-spacing: 2px;
-}
-
 /* Invitation Message Styles */
 .invitation-message {
-    padding: 50px 20px;
+    padding: 50px 30px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    margin: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
+    max-width: 500px;
+    width: calc(100% - 40px);
 }
 
 .invitation-message h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 25px;
     color: #8B4789;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .invitation-message p {
     margin: 12px 0;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: #555;
-    line-height: 1.8;
+    line-height: 2;
 }
-
-/* Photo modal은 PhotoModal.css에서 관리 */
 
 
 /* Location Styles */
 .location {
-    padding: 50px 20px;
-    background: rgba(255, 255, 255, 0.8);
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    margin: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
+    max-width: 560px;
+    width: calc(100% - 40px);
 }
 
 .location h2 {
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 35px;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
     color: #8B4789;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .location-info {
@@ -106,20 +138,20 @@ a {
 }
 
 .location-info h3 {
-    font-size: 1.4rem;
-    margin: 25px 0 15px;
+    font-size: 1.1rem;
+    margin: 12px 0 6px;
     color: #8B4789;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .location-info p {
-    margin: 10px 0;
+    margin: 4px 0;
     color: #666;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
 }
 
 .map {
-    margin: 25px 0;
+    margin: 10px 0;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -132,41 +164,53 @@ a {
 }
 
 .directions {
-    margin-top: 35px;
+    margin-top: 10px;
 }
 
-.naver-map-button {
-    display: inline-block;
-    margin: 20px 0;
-    padding: 14px 30px;
-    background: #03C75A;
-    color: white;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1.05rem;
-    text-align: center;
-    transition: all 0.3s;
-    box-shadow: 0 4px 12px rgba(3, 199, 90, 0.3);
+.directions-grid {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
-.naver-map-button:hover {
-    background: #02B350;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(3, 199, 90, 0.4);
+.directions-col {
+    flex: 1 1 0;
+    min-width: 160px;
+    text-align: left;
 }
 
-/* 지도 버튼 스타일 */
+.bus-list {
+    text-align: left;
+    margin-left: 20px;
+    line-height: 1.6;
+}
+
+.parking-note {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+@media (max-width: 420px) {
+    .directions-grid {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 .map-button {
-    padding: 12px 24px;
+    padding: 10px 20px;
     border: none;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.3s;
     display: inline-flex;
     align-items: center;
     gap: 5px;
+    font-family: 'Gowun Batang', serif;
 }
 
 .kakao-button {
@@ -195,47 +239,44 @@ a {
 
 /* Account Info Styles */
 .account-info {
-    padding: 50px 20px;
+    padding: 40px 25px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    margin: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
+    max-width: 500px;
+    width: calc(100% - 40px);
 }
 
 .account-info h2 {
-    font-size: 2rem;
-    margin-bottom: 25px;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
     color: #8B4789;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .account-info h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #8B4789;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .account-info ul {
     list-style: none;
     padding: 0;
     max-width: 400px;
-    margin: 20px auto;
+    margin: 15px auto;
 }
 
 .account-info li {
-    padding: 18px;
-    margin: 10px 0;
+    padding: 16px;
+    margin: 8px 0;
     background: linear-gradient(135deg, #FFF5F7 0%, #FFE4E9 100%);
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(139, 71, 137, 0.1);
     transition: all 0.3s;
-}
-
-.account-info li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(139, 71, 137, 0.2);
+    cursor: pointer;
 }
 
 .account-info li:hover {
@@ -245,39 +286,33 @@ a {
 
 /* Share Buttons Styles */
 .share-buttons {
-    padding: 50px 20px;
+    padding: 40px 20px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    margin: 20px 20px 40px 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
+    max-width: 500px;
+    width: calc(100% - 40px);
 }
 
 .share-buttons h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 25px;
     color: #8B4789;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .header h1 {
-        font-size: 1.8rem;
-    }
-    
     .invitation-message h2,
     .location h2,
     .account-info h2,
     .share-buttons h2 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
-    
-    .invitation-message,
-    .location,
-    .account-info,
-    .share-buttons {
-        margin: 15px;
+
+    .location {
+        max-height: none;
     }
 }

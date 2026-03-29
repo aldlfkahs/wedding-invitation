@@ -1,11 +1,13 @@
 :root {
-    --primary-color: #ff6f61; /* Main color for the wedding theme */
-    --secondary-color: #f7cac9; /* Secondary color for accents */
-    --background-color: #ffffff; /* Background color for the app */
-    --text-color: #333333; /* Default text color */
-    --header-font: 'Georgia', serif; /* Font for headers */
-    --body-font: 'Arial', sans-serif; /* Font for body text */
-    --border-radius: 8px; /* Standard border radius for buttons and cards */
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Standard box shadow */
-    --transition-speed: 0.3s; /* Standard transition speed for animations */
+    --primary-color: #8B4789;
+    --secondary-color: #C9A0B8;
+    --accent-color: #FFB6C1;
+    --background-color: #FFF5F7;
+    --text-color: #333333;
+    --text-light: #666666;
+    --header-font: 'Cormorant Garamond', 'Gowun Batang', serif;
+    --body-font: 'Gowun Batang', serif;
+    --border-radius: 20px;
+    --box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
+    --transition-speed: 0.3s;
 }

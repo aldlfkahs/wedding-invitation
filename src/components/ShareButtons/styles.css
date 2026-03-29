@@ -1,19 +1,6 @@
-.share-buttons {
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 100%);
-  text-align: center;
-}
-
 .share-buttons-container {
   max-width: 500px;
   margin: 0 auto;
-}
-
-.share-buttons h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 30px;
 }
 
 .button-group {
@@ -29,7 +16,7 @@
   padding: 16px 24px;
   border: none;
   border-radius: 12px;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -38,6 +25,7 @@
   justify-content: center;
   gap: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Gowun Batang', serif;
 }
 
 .share-button .icon {

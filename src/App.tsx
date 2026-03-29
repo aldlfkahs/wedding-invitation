@@ -4,7 +4,6 @@ import InvitationMessage from './components/InvitationMessage';
 import PhotoGallery from './components/PhotoGallery';
 import Location from './components/Location';
 import AccountInfo from './components/AccountInfo';
-import ShareButtons from './components/ShareButtons';
 import PhotoModal from './components/PhotoGallery/PhotoModal';
 import './styles/global.css';
 
@@ -15,20 +14,16 @@ const App: React.FC = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [nextPhotoIndex, setNextPhotoIndex] = useState<number | null>(null);
 
-  // Load photos on mount - images 폴더의 실제 이미지만 불러오기
+  // Load photos on mount
   useEffect(() => {
     const loadPhotos = () => {
-      // Vite의 import.meta.glob으로 public/images 폴더의 모든 이미지 파일 가져오기
       const imageModules = import.meta.glob('/public/images/*.{jpg,jpeg,png,gif,webp}', { eager: true, as: 'url' });
       
-      // 파일 경로를 URL로 변환하고 정렬
       const photoList = Object.keys(imageModules)
         .map(path => {
-          // '/public/images/1.jpg' -> '/images/1.jpg'
           return path.replace('/public', import.meta.env.BASE_URL.replace(/\/$/, ''));
         })
         .sort((a, b) => {
-          // 파일명에서 숫자 추출하여 정렬
           const numA = parseInt(a.match(/(\d+)\.\w+$/)?.[1] || '0');
           const numB = parseInt(b.match(/(\d+)\.\w+$/)?.[1] || '0');
           return numA - numB;
@@ -38,6 +33,39 @@ const App: React.FC = () => {
     };
     
     loadPhotos();
+  }, []);
+
+  // Intersection Observer for fade-in animations
+  useEffect(() => {
+    const container = document.querySelector('.snap-container');
+    if (!container) return;
+
+    const sections = document.querySelectorAll('.snap-section');
+
+    // First section always visible immediately
+    if (sections[0]) sections[0].classList.add('visible');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { root: container, threshold: 0.1 }
+    );
+    sections.forEach((section) => observer.observe(section));
+
+    // Fallback: make all sections visible after 3s if observer fails
+    const fallback = setTimeout(() => {
+      sections.forEach((section) => section.classList.add('visible'));
+    }, 3000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
   }, []);
 
   const openModal = (index: number) => {
@@ -66,16 +94,30 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <InvitationMessage />
-      <PhotoGallery
-        photos={photos}
-        openModal={openModal}
-      />
-      <Location />
-      <AccountInfo />
-      <ShareButtons />
+    <div className="snap-container">
+      <section className="snap-section">
+        <Header />
+      </section>
+
+      <section className="snap-section">
+        <InvitationMessage />
+      </section>
+
+      <section className="snap-section">
+        <PhotoGallery
+          photos={photos}
+          openModal={openModal}
+        />
+      </section>
+
+      <section className="snap-section">
+        <Location />
+      </section>
+
+      <section className="snap-section">
+        <AccountInfo />
+      </section>
+
       {isModalOpen && photos.length > 0 && (
         <PhotoModal
           photo={photos[currentPhotoIndex]}

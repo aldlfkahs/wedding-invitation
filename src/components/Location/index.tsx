@@ -108,28 +108,33 @@ const Location: React.FC = () => {
                 <p><strong>전화:</strong> 000-0000-0000</p>
                 
                 <div className="map">
-                    <div ref={mapRef} style={{ width: '100%', height: '400px', borderRadius: '12px' }}></div>
+                    <div ref={mapRef} style={{ width: '100%', height: '250px', borderRadius: '12px' }}></div>
                 </div>
 
-                <div style={{ textAlign: 'center', marginTop: '15px', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <div style={{ textAlign: 'center', marginTop: '8px', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
                     <button onClick={openKakaoMap} className="map-button kakao-button">카카오맵</button>
                     <button onClick={openNaverMap} className="map-button naver-button">네이버지도</button>
                 </div>
 
                 <div className="directions">
-                    <h3>대중교통 이용</h3>
-                    <p><strong>지하철:</strong> 8호선 문정역 1번 출구 도보 5분</p>
-                    <p><strong>버스:</strong></p>
-                    <ul style={{ textAlign: 'left', marginLeft: '20px', lineHeight: '1.8' }}>
-                        <li>간선: 341, 360번</li>
-                        <li>지선: 3217, 3414번</li>
-                        <li>광역: 1117, 9403번</li>
-                    </ul>
-                    
-                    <h3>자가용 이용</h3>
-                    <p>네비게이션에 <strong>더컨벤션 송파문정</strong> 검색</p>
-                    <p>예식장 건물 지하 주차장 이용 가능 (2시간 무료)</p>
-                    <p style={{ fontSize: '0.95rem', color: '#888', marginTop: '10px' }}>* 주차 공간이 협소하오니 가급적 대중교통을 이용해주시기 바랍니다.</p>
+                    <div className="directions-grid">
+                        <div className="directions-col">
+                            <h3>대중교통 이용</h3>
+                            <p><strong>지하철:</strong> 8호선 문정역 1번 출구 도보 5분</p>
+                            <p><strong>버스:</strong></p>
+                            <ul className="bus-list">
+                                <li>간선: 341, 360번</li>
+                                <li>지선: 3217, 3414번</li>
+                                <li>광역: 1117, 9403번</li>
+                            </ul>
+                        </div>
+                        <div className="directions-col">
+                            <h3>자가용 이용</h3>
+                            <p>네비게이션에 <strong>더컨벤션 송파문정</strong> 검색</p>
+                            <p>예식장 건물 지하 주차장 이용 가능 (2시간 무료)</p>
+                            <p className="parking-note">* 주차 공간이 협소하오니 가급적 대중교통을 이용해주시기 바랍니다.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

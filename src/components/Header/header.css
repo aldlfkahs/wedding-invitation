@@ -1,26 +1,122 @@
 .header {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.5) 100%
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
     text-align: center;
-    padding: 50px 20px;
-    background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 100%);
-    border-bottom: 1px solid rgba(255, 182, 193, 0.2);
+    color: #fff;
+    padding: 20px;
+}
+
+.hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    opacity: 0.9;
 }
 
 .header h1 {
-    font-family: 'Nanum Myeongjo', serif;
-    font-size: 2.2rem;
-    color: #8B4789;
-    margin-bottom: 25px;
-    font-weight: 800;
-    letter-spacing: 2px;
+    font-family: 'Gowun Batang', serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-divider {
+    font-size: 1rem;
+    letter-spacing: 8px;
+    margin: 15px 0;
+    opacity: 0.7;
 }
 
 .wedding-details {
-    font-size: 1.15rem;
-    color: #666;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
     line-height: 2;
-    font-family: 'Stylish', sans-serif;
+    font-family: 'Gowun Batang', serif;
 }
 
 .wedding-details p {
-    margin: 10px 0;
+    margin: 8px 0;
+}
+
+.dday-counter {
+    margin-top: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+    opacity: 0.85;
+    padding: 10px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    display: inline-block;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+    z-index: 1;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-15px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-7px);
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        letter-spacing: 4px;
+    }
+
+    .dday-counter {
+        font-size: 1.2rem;
+    }
 }

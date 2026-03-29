@@ -1,97 +1,144 @@
 .photo-gallery {
-    padding: 50px 20px 50px 20px;
-    background: rgba(255, 255, 255, 0.8);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    margin: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.1);
-    display: block;
 }
 
 .photo-gallery h2 {
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 35px;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
     color: #8B4789;
-    font-family: 'Nanum Myeongjo', serif;
-    font-weight: 800;
-    margin-left: 0;
-    margin-right: 0;
-    display: block;
-    width: 100%;
+    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
+    font-weight: 600;
 }
 
-/* 가로 스크롤 컨테이너 */
-.horizontal-scroll-container {
-    width: calc(100% + 40px);
-    overflow: hidden;
+.photo-grid-container {
     position: relative;
-    margin-left: -20px;
-    margin-right: -20px;
-    padding: 0 20px;
-}
-
-.horizontal-scroll {
+    flex: 1;
     display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 10px 5px;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    
-    /* 스크롤바 스타일링 */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(139, 71, 137, 0.3) transparent;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 450px;
+    min-height: 0;
 }
 
-.horizontal-scroll::-webkit-scrollbar {
-    height: 6px;
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
+    aspect-ratio: 1;
+    max-height: calc(100vh - 200px);
+    max-width: calc(100vh - 200px);
 }
 
-.horizontal-scroll::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.horizontal-scroll::-webkit-scrollbar-thumb {
-    background: rgba(139, 71, 137, 0.3);
-    border-radius: 3px;
-}
-
-.horizontal-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(139, 71, 137, 0.5);
-}
-
-/* 가로 스크롤용 사진 아이템 */
-.photo-horizontal {
-    flex: 0 0 auto;
-    width: 150px;
-    height: 200px;
+.photo-grid-item {
     position: relative;
     overflow: hidden;
+    border-radius: 8px;
     cursor: pointer;
-    border-radius: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(139, 71, 137, 0.15);
+    aspect-ratio: 1;
 }
 
-.photo-horizontal:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 20px rgba(139, 71, 137, 0.25);
+.photo-grid-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(139, 71, 137, 0.2);
+    z-index: 1;
 }
 
-.photo-horizontal img {
+.photo-grid-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
 }
 
-/* 기존 그리드 스타일 제거 */
-.grid {
-    display: none;
+.page-indicators {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px 0;
 }
 
-.photo {
-    display: none;
+.page-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(139, 71, 137, 0.25);
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.page-dot.active {
+    background: #8B4789;
+    transform: scale(1.3);
+}
+
+.page-dot:hover:not(.active) {
+    background: rgba(139, 71, 137, 0.5);
+}
+
+.gallery-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    color: #8B4789;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.gallery-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-nav-prev {
+    left: 10px;
+}
+
+.gallery-nav-next {
+    right: 10px;
+}
+
+@media (max-width: 768px) {
+    .photo-gallery h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .photo-grid {
+        gap: 4px;
+    }
+
+    .photo-grid-item {
+        border-radius: 6px;
+    }
+
+    .gallery-nav-btn {
+        display: none;
+    }
 }
