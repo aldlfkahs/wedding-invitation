@@ -107,13 +107,14 @@ const Location: React.FC = () => {
                 <p><strong>주소:</strong> 서울 송파구 문정동 651-8 (NH송파농협 11층)</p>
                 <p><strong>전화:</strong> 000-0000-0000</p>
                 
-                <div className="map">
-                    <div ref={mapRef} style={{ width: '100%', height: '250px', borderRadius: '12px' }}></div>
-                </div>
-
-                <div style={{ textAlign: 'center', marginTop: '8px', display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <button onClick={openKakaoMap} className="map-button kakao-button">카카오맵</button>
-                    <button onClick={openNaverMap} className="map-button naver-button">네이버지도</button>
+                <div className="map-row">
+                    <div className="map" style={{ flex: 1 }}>
+                        <div ref={mapRef} style={{ width: '100%', height: '200px', borderRadius: '12px' }}></div>
+                    </div>
+                    <div className="map-actions">
+                        <button onClick={openKakaoMap} className="map-button kakao-button">카카오맵</button>
+                        <button onClick={openNaverMap} className="map-button naver-button">네이버지도</button>
+                    </div>
                 </div>
 
                 <div className="directions">

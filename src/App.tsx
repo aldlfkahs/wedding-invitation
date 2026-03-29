@@ -95,7 +95,7 @@ const App: React.FC = () => {
 
   return (
     <div className="snap-container">
-      <section className="snap-section">
+      <section className="snap-section snap-header">
         <Header />
       </section>
 

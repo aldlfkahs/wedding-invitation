@@ -8,6 +8,10 @@
     padding: 30px 20px;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
+    max-width: 560px;
+    width: calc(100% - 40px);
 }
 
 .photo-gallery h2 {
@@ -19,9 +23,26 @@
     font-weight: 600;
 }
 
+.photo-gallery {
+    width: 100%;
+    /* don't force full height so card doesn't fill viewport */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 18px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
+    max-width: 560px;
+    width: calc(100% - 40px);
+}
+
 .photo-grid-container {
     position: relative;
-    flex: 1;
+    /* prevent expanding to fill remaining space */
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,6 +1,6 @@
 .header {
     width: 100%;
-    height: 100%;
+    height: 100vh; /* full viewport for main hero */
     position: relative;
     display: flex;
     align-items: center;

@@ -64,6 +64,8 @@ a {
     justify-content: center;
     position: relative;
     overflow: hidden;
+    padding: 28px 0; /* breathing space above and below cards */
+    box-sizing: border-box;
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1),
@@ -75,13 +77,17 @@ a {
     transform: none;
 }
 
+.snap-header {
+    padding: 0; /* header makes full-bleed */
+}
+
 .snap-section.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 .container {
-    max-width: 600px;
+    max-width: 560px;
     margin: 0 auto;
     padding: 0;
 }
@@ -94,7 +100,7 @@ a {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: 500px;
+    max-width: 560px;
     width: calc(100% - 40px);
 }
 
@@ -150,17 +156,54 @@ a {
     font-size: 0.95rem;
 }
 
+.map-row {
+    display: flex;
+    gap: 12px;
+    align-items: center; /* vertically center buttons */
+    justify-content: space-between;
+}
+
 .map {
     margin: 10px 0;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex: 1 1 0;
+}
+
+.map-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 110px;
+    align-items: stretch;
+    margin-left: 8px;
+}
+
+.map-actions .map-button {
+    width: 100%;
 }
 
 .map iframe {
     width: 100%;
-    height: 300px;
+    height: 240px; /* 80% of previous 300px */
     border: none;
+}
+
+@media (max-width: 420px) {
+    .map-row {
+        flex-direction: column;
+    }
+
+    .map-actions {
+        flex-direction: row;
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .map-actions .map-button {
+        width: auto;
+    }
 }
 
 .directions {
@@ -245,7 +288,7 @@ a {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: 500px;
+    max-width: 560px;
     width: calc(100% - 40px);
 }
 
@@ -292,7 +335,7 @@ a {
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: 500px;
+    max-width: 560px;
     width: calc(100% - 40px);
 }
 
@@ -308,7 +351,8 @@ a {
     .invitation-message h2,
     .location h2,
     .account-info h2,
-    .share-buttons h2 {
+    .share-buttons h2,
+    .photo-gallery h2 {
         font-size: 1.5rem;
     }
 
@@ -316,3 +360,22 @@ a {
         max-height: none;
     }
 }
+
+/* Reduce title spacing and card padding to show background around cards */
+.section-title {
+    margin-bottom: 12px;
+}
+
+.invitation-message h2,
+.location h2,
+.account-info h2,
+.photo-gallery h2,
+.share-buttons h2 {
+    margin-bottom: 12px; /* reduce space below titles */
+}
+
+.invitation-message { padding: 36px 24px; }
+.location { padding: 22px 18px; }
+.account-info { padding: 28px 20px; }
+.photo-gallery { padding: 24px 18px; }
+.share-buttons { padding: 24px 18px; }
