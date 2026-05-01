@@ -120,7 +120,7 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
                             <div ref={mapRef} style={{ width: '100%', height: '200px', borderRadius: '12px' }}></div>
                         </div>
 
-                        <div style={{ textAlign: 'center', marginTop: '8px' }}>
+                        <div style={{ textAlign: 'center', marginTop: '8px', display: 'flex', gap: '12px', justifyContent: 'center' }}>
                             <button onClick={openKakaoMap} className="map-button kakao-button">카카오맵</button>
                             <button onClick={openNaverMap} className="map-button naver-button">네이버지도</button>
                         </div>

@@ -5,6 +5,7 @@ import PhotoGallery from './components/PhotoGallery';
 import Location from './components/Location';
 import AccountInfo from './components/AccountInfo';
 import PhotoModal from './components/PhotoGallery/PhotoModal';
+import BackgroundMusic from './components/BackgroundMusic';
 import './styles/global.css';
 
 const App: React.FC = () => {
@@ -95,6 +96,7 @@ const App: React.FC = () => {
 
   return (
     <div className="snap-container">
+      <BackgroundMusic />
       <section className="snap-section snap-header">
         <Header />
       </section>

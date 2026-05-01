@@ -88,7 +88,22 @@ Account Holder: "홍길동"
 Account Number: "123-456-789012"
 ```
 
-### 5. 오시는 길 정보 설정
+### 5. 배경음악 추가
+
+**파일**: `src/components/BackgroundMusic/index.tsx`
+
+1. 음악 파일(예: `bgm.mp3`)을 **`public/` 폴더**에 넣습니다.
+2. 파일 이름이 `bgm.mp3`가 아닐 경우 컴포넌트 상단의 `MUSIC_SRC` 상수를 수정합니다.
+
+```typescript
+// src/components/BackgroundMusic/index.tsx
+const MUSIC_SRC = `${import.meta.env.BASE_URL}파일명.mp3`;
+```
+
+> 지원 포맷: `.mp3`, `.ogg`, `.wav` 등 브라우저 기본 지원 오디오 형식  
+> 페이지 진입 시 자동 재생을 시도하며, 브라우저 정책으로 막힐 경우 첫 클릭/터치 시 재생됩니다.
+
+### 6. 오시는 길 정보 설정
 
 **파일**: `src/components/Location/index.tsx`
 
@@ -97,7 +112,7 @@ Account Number: "123-456-789012"
 - 자차 이용 안내
 - 대중교통 이용 안내
 
-### 6. 환경 변수 설정 (선택)
+### 7. 환경 변수 설정 (선택)
 
 카카오톡 공유 기능을 사용하려면 카카오 개발자 계정에서 JavaScript 키를 발급받아야 합니다.
 
@@ -209,6 +224,7 @@ wedding-invitation/
 - [ ] 결혼식 날짜, 시간, 장소 정보 입력
 - [ ] 신랑/신부 이름 및 초대 문구 작성
 - [ ] 웨딩 사진 9장 업로드 (`public/images/` 폴더에)
+- [ ] 배경음악 파일 추가 (`public/bgm.mp3`)
 - [ ] 결혼식장 위치 및 교통편 정보 입력
 - [ ] 계좌 정보 입력 (신랑/신부 각각)
 - [ ] 카카오톡 API 키 발급 및 설정 (선택)
