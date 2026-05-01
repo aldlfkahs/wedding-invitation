@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './header.css';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    onAnimationDone?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
     const weddingDate = "2026-10-17";
     const weddingTime = "12:30";
     const weddingLocation = "서울특별시 강남구";
 
     const [dday, setDday] = useState<number | null>(null);
+    const [bgVisible, setBgVisible] = useState(false);
+    const [contentVisible, setContentVisible] = useState(false);
 
     useEffect(() => {
         const targetDate = new Date(weddingDate).getTime();
@@ -15,12 +21,41 @@ const Header: React.FC = () => {
         setDday(diff);
     }, []);
 
+    // 애니메이션 시퀀스
+    useEffect(() => {
+        // Phase 1: 배경 사진 페이드인 (100ms 후 시작)
+        const bgTimer = setTimeout(() => setBgVisible(true), 100);
+        // Phase 2: 텍스트 콘텐츠 페이드인 (1000ms 후)
+        const contentTimer = setTimeout(() => setContentVisible(true), 1000);
+        // Phase 3: 애니메이션 완료 콜백 (2500ms)
+        const doneTimer = setTimeout(() => {
+            onAnimationDone?.();
+        }, 2500);
+
+        return () => {
+            clearTimeout(bgTimer);
+            clearTimeout(contentTimer);
+            clearTimeout(doneTimer);
+        };
+    }, [onAnimationDone]);
+
     const bgUrl = `${import.meta.env.BASE_URL}images/1.jpg`;
 
     return (
-        <header className="header" style={{ backgroundImage: `url(${bgUrl})` }}>
+        <header className="header">
+            {/* 배경 이미지 레이어 - 별도로 분리해 opacity 컨트롤 */}
+            <div
+                className="hero-bg"
+                style={{
+                    backgroundImage: `url(${bgUrl})`,
+                    opacity: bgVisible ? 1 : 0,
+                }}
+            />
             <div className="hero-overlay" />
-            <div className="hero-content">
+            <div
+                className="hero-content"
+                style={{ opacity: contentVisible ? 1 : 0 }}
+            >
                 <p className="hero-subtitle">Wedding Invitation</p>
                 <h1>결혼식 초대장</h1>
                 <div className="hero-divider">✦</div>
@@ -35,7 +70,10 @@ const Header: React.FC = () => {
                     </div>
                 )}
             </div>
-            <div className="scroll-indicator">
+            <div
+                className="scroll-indicator"
+                style={{ opacity: contentVisible ? 1 : 0 }}
+            >
                 <span>↓</span>
             </div>
         </header>

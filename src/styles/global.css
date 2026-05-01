@@ -52,6 +52,11 @@ a {
     -ms-overflow-style: none;
 }
 
+/* 인트로 애니메이션 중 스크롤 잠금 */
+.snap-container.scroll-locked {
+    overflow: hidden;
+}
+
 .snap-container::-webkit-scrollbar {
     display: none;
 }

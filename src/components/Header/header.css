@@ -5,9 +5,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* 배경색은 사이트 배경과 동일한 그라디언트로 유지 */
+    background: linear-gradient(180deg, #FFF5F7 0%, #FFE4E9 50%, #E8D5F2 100%);
+    background-attachment: fixed;
+}
+
+/* 배경 이미지를 별도 div로 분리해 opacity 페이드인 연출 */
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-overlay {
@@ -30,6 +44,8 @@
     text-align: center;
     color: #fff;
     padding: 20px;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-subtitle {
@@ -92,6 +108,8 @@
     font-size: 1.5rem;
     animation: bounce 2s infinite;
     z-index: 1;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes bounce {

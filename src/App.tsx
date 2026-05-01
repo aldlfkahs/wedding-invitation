@@ -14,6 +14,8 @@ const App: React.FC = () => {
   const [photos, setPhotos] = useState<string[]>([]);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [nextPhotoIndex, setNextPhotoIndex] = useState<number | null>(null);
+  // 인트로 애니메이션 중 스크롤 잠금
+  const [scrollLocked, setScrollLocked] = useState(true);
 
   // Load photos on mount
   useEffect(() => {
@@ -31,6 +33,12 @@ const App: React.FC = () => {
         });
       
       setPhotos(photoList);
+
+      // 애니메이션 동안 백그라운드에서 사진 프리로드
+      photoList.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
     };
     
     loadPhotos();
@@ -95,10 +103,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="snap-container">
+    <div className={`snap-container${scrollLocked ? ' scroll-locked' : ''}`}>
       <BackgroundMusic />
       <section className="snap-section snap-header">
-        <Header />
+        <Header onAnimationDone={() => setScrollLocked(false)} />
       </section>
 
       <section className="snap-section">
