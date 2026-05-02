@@ -25,13 +25,21 @@ const App: React.FC = () => {
         )
         .catch(() => [] as string[]);
 
-      setPhotos(photoList);
+      // 갤러리 체감 속도를 위해 전부 선로딩 후 렌더링
+      await Promise.all(
+        photoList.map(
+          (src) =>
+            new Promise<void>((resolve) => {
+              const img = new Image();
+              img.decoding = 'async';
+              img.src = src;
+              img.onload = () => resolve();
+              img.onerror = () => resolve();
+            })
+        )
+      );
 
-      // 애니메이션 동안 백그라운드에서 사진 프리로드
-      photoList.forEach((src) => {
-        const img = new Image();
-        img.src = src;
-      });
+      setPhotos(photoList);
     };
 
     loadPhotos();
@@ -71,32 +79,33 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className={`snap-container${scrollLocked ? ' scroll-locked' : ''}`}>
-      <BackgroundMusic />
-      <section className="snap-section snap-header">
-        <Header onAnimationDone={() => setScrollLocked(false)} />
-      </section>
+    <div className="app-frame">
+      <div className={`snap-container${scrollLocked ? ' scroll-locked' : ''}`}>
+        <BackgroundMusic />
+        <section className="snap-section snap-header">
+          <Header onAnimationDone={() => setScrollLocked(false)} />
+        </section>
 
-      <section className="snap-section">
-        <InvitationMessage />
-      </section>
+        <section className="snap-section">
+          <InvitationMessage />
+        </section>
 
-      <section className="snap-section">
-        <PhotoGallery photos={photos} />
-      </section>
+        <section className="snap-section">
+          <PhotoGallery photos={photos} />
+        </section>
 
-      <section className="snap-section">
-        <Location mode="map" />
-      </section>
+        <section className="snap-section">
+          <Location mode="map" />
+        </section>
 
-      <section className="snap-section">
-        <Location mode="directions" />
-      </section>
+        <section className="snap-section">
+          <Location mode="directions" />
+        </section>
 
-      <section className="snap-section">
-        <AccountInfo />
-      </section>
-
+        <section className="snap-section">
+          <AccountInfo />
+        </section>
+      </div>
     </div>
   );
 };
