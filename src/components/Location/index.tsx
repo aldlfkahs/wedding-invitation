@@ -18,7 +18,6 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
     useEffect(() => {
         if (mode === 'directions') return; // don't init map when only rendering directions
         if (!mapRef.current) {
-            console.log('Map container not found');
             return;
         }
 
@@ -30,8 +29,6 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
             }
 
             try {
-                console.log('Initializing Naver Map...');
-                
                 // 더컨벤션 송파문정 좌표 (서울 송파구 문정동 651-8)
                 const location = new window.naver.maps.LatLng(37.484123, 127.122752);
 
@@ -71,8 +68,6 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
                         infoWindow.open(map, marker);
                     }
                 });
-
-                console.log('Naver Map initialized successfully');
             } catch (error) {
                 console.error('Error initializing map:', error);
             }

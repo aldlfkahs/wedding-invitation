@@ -53,6 +53,10 @@ const weddingTime = "15:00"; // 결혼식 시간 (HH:MM 형식)
 const weddingLocation = "서울특별시 강남구"; // 결혼식 장소
 ```
 
+**헤더 메인 배경 이미지 파일명 규칙**
+- 파일 위치: `public/images/main.jpg`
+- 헤더는 항상 `main` 이름의 이미지를 로드합니다.
+
 ### 2. 초대 문구 수정
 
 **파일**: `src/components/InvitationMessage/index.tsx`
@@ -76,6 +80,10 @@ const photos = [
 ```
 
 **사진 저장 위치**: `public/images/` 폴더에 웨딩 사진 업로드
+
+**중요 규칙**
+- `main.jpg`는 헤더 배경 전용 이미지이며, 포토갤러리에서는 자동 제외됩니다.
+- 포토갤러리에 표시할 파일 목록은 `public/images/manifest.json`에서 관리합니다.
 
 ### 4. 계좌 정보 입력
 

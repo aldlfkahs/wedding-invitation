@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
         };
     }, [onAnimationDone]);
 
-    const bgUrl = `${import.meta.env.BASE_URL}images/1.jpg`;
+    const bgUrl = `${import.meta.env.BASE_URL}images/main.jpg`;
 
     return (
         <header className="header">

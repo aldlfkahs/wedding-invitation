@@ -103,10 +103,10 @@ a {
     text-align: center;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 0;
     box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: 560px;
-    width: calc(100% - 40px);
+    max-width: none;
+    width: 100%;
 }
 
 .invitation-message h2 {
@@ -165,10 +165,10 @@ a {
     padding: 30px 20px;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 0;
     box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: 560px;
-    width: calc(100% - 40px);
+    max-width: none;
+    width: 100%;
 }
 
 .location h2 {
@@ -327,10 +327,10 @@ a {
     text-align: center;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 0;
     box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: 560px;
-    width: calc(100% - 40px);
+    max-width: none;
+    width: 100%;
 }
 
 .account-info h2 {
@@ -374,10 +374,10 @@ a {
     text-align: center;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 0;
     box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: 560px;
-    width: calc(100% - 40px);
+    max-width: none;
+    width: 100%;
 }
 
 .share-buttons h2 {
@@ -418,5 +418,5 @@ a {
 .invitation-message { padding: 36px 24px; }
 .location { padding: 22px 18px; }
 .account-info { padding: 28px 20px; }
-.photo-gallery { padding: 24px 18px; }
+.photo-gallery { padding: 24px 0; }
 .share-buttons { padding: 24px 18px; }
