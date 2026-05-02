@@ -113,8 +113,8 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
                     <div className="location-info">
                         <h3>예식장 정보</h3>
                         <p><strong>더컨벤션 송파문정</strong></p>
-                        <p><strong>주소:</strong> 서울 송파구 문정동 651-8 (NH송파농협 11층)</p>
-                        <p><strong>전화:</strong> 000-0000-0000</p>
+                        <p><strong>주소:</strong> 서울 송파구 문정동 651-8 (NH송파농협 13층)</p>
+                        <p><strong>전화:</strong> 02-6418-5000</p>
 
                         <div className="map">
                             <div ref={mapRef} style={{ width: '100%', height: '200px', borderRadius: '12px' }}></div>

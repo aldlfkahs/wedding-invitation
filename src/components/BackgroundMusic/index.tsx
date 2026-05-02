@@ -74,7 +74,7 @@ const BackgroundMusic: React.FC = () => {
                 title={muted ? '음악 켜기' : '음악 끄기'}
                 aria-label={muted ? '음악 켜기' : '음악 끄기'}
             >
-                {muted || !playing ? '🔇' : '🎵'}
+                {muted ? '🔇' : '🎵'}
             </button>
         </>
     );

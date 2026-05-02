@@ -8,7 +8,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
     const weddingDate = "2026-10-17";
     const weddingTime = "12:30";
-    const weddingLocation = "서울특별시 강남구";
+    const weddingLocation = "더컨벤션 송파문정 아모르홀";
 
     const [dday, setDday] = useState<number | null>(null);
     const [bgVisible, setBgVisible] = useState(false);
@@ -23,10 +23,10 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
 
     // 애니메이션 시퀀스
     useEffect(() => {
-        // Phase 1: 배경 사진 페이드인 (100ms 후 시작)
-        const bgTimer = setTimeout(() => setBgVisible(true), 100);
-        // Phase 2: 텍스트 콘텐츠 페이드인 (1000ms 후)
-        const contentTimer = setTimeout(() => setContentVisible(true), 1000);
+        // Phase 1: 배경 사진 페이드인 (500ms 후 시작)
+        const bgTimer = setTimeout(() => setBgVisible(true), 500);
+        // Phase 2: 텍스트 콘텐츠 페이드인 (2000ms 후)
+        const contentTimer = setTimeout(() => setContentVisible(true), 2000);
         // Phase 3: 애니메이션 완료 콜백 (2500ms)
         const doneTimer = setTimeout(() => {
             onAnimationDone?.();
