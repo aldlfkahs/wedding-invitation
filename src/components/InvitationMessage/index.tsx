@@ -8,13 +8,18 @@ const InvitationMessage: React.FC = () => {
             <p>문구를 뭐넣지?</p>
             <p>많이 와주세요 제발...!</p>
             <p>참석하여 자리를 빛내주세요. 반짝반짝</p>
-            <p className="family-line">
-                <strong>OOO, OOO</strong>의 아들 <strong>이승원</strong>
-                <span className="family-separator"> · </span>
-                <strong>OOO, OOO</strong>의 딸 <strong>고정민</strong>
-            </p>
+            <div className="family-line" role="text" aria-label="OOO, OOO의 아들 이승원 / OOO, OOO의 딸 고정민">
+                <div className="family-row">
+                    <span className="family-label"><strong>OOO, OOO</strong>의 아들</span>
+                    <strong className="family-name">이승원</strong>
+                </div>
+                <div className="family-row">
+                    <span className="family-label"><strong>OOO, OOO</strong>의 딸</span>
+                    <strong className="family-name">고정민</strong>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default InvitationMessage;
+export default InvitationMessage

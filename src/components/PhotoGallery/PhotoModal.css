@@ -9,12 +9,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overscroll-behavior: contain;
 }
 
 .photo-modal-content {
     position: relative;
     max-width: 90%;
     max-height: 90%;
+    touch-action: pan-y pinch-zoom;
 }
 
 .modal-photo-container {
@@ -31,6 +33,8 @@
     position: absolute;
     top: 0;
     left: 0;
+    will-change: transform, opacity;
+    transform: translateZ(0);
 }
 
 .modal-photo.current {
