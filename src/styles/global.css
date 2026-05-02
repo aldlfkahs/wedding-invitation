@@ -123,6 +123,24 @@ a {
     line-height: 2;
 }
 
+.invitation-message .family-line {
+    margin-top: 18px;
+    font-size: 0.95rem;
+    color: #666;
+    letter-spacing: 0.2px;
+    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
+}
+
+.invitation-message .family-line strong {
+    font-weight: 700;
+    color: #444;
+}
+
+.invitation-message .family-separator {
+    margin: 0 6px;
+    color: #b08bbd;
+}
+
 
 /* Location Styles */
 .location {

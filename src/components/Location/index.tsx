@@ -131,15 +131,15 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
             {(mode === 'directions' || mode === 'both') && (
                 <div className="location-info directions-only" style={{ marginTop: (mode === 'both' ? '18px' : '0') }}>
                     <h3>대중교통 이용</h3>
-                    <p><strong>지하철:</strong> 8호선 문정역 1번 출구 도보 5분</p>
-                    <p><strong>버스:</strong></p>
+                    <p><strong>🚇 지하철:</strong> 8호선 문정역 1번 출구 도보 5분</p>
+                    <p><strong>🚌 버스:</strong></p>
                     <ul className="bus-list">
                         <li>간선: 341, 360번</li>
                         <li>지선: 3217, 3414번</li>
                         <li>광역: 1117, 9403번</li>
                     </ul>
 
-                    <h3>자가용 이용</h3>
+                    <h3>🚗 자가용 이용</h3>
                     <p>네비게이션에 <strong>더컨벤션 송파문정</strong> 검색</p>
                     <p>예식장 건물 지하 주차장 이용 가능 (2시간 무료)</p>
                     <p className="parking-note">* 주차 공간이 협소하오니 가급적 대중교통을 이용해주시기 바랍니다.</p>
