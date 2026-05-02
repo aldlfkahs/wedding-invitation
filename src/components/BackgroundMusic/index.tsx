@@ -13,6 +13,7 @@ const MUSIC_SRC = `${import.meta.env.BASE_URL}bgm.mp3`;
 
 const BackgroundMusic: React.FC = () => {
     const audioRef = useRef<HTMLAudioElement>(null);
+    const wasPlayingBeforeHiddenRef = useRef(false);
     const [muted, setMuted] = useState(false);
     const [playing, setPlaying] = useState(false);
 
@@ -42,6 +43,32 @@ const BackgroundMusic: React.FC = () => {
         };
 
         tryPlay();
+    }, []);
+
+    // 브라우저가 백그라운드로 가면 일시정지, 복귀하면 이전 상태 복원
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                wasPlayingBeforeHiddenRef.current = !audio.paused && !audio.muted;
+                audio.pause();
+                setPlaying(false);
+                return;
+            }
+
+            if (wasPlayingBeforeHiddenRef.current && !audio.muted) {
+                audio.play()
+                    .then(() => setPlaying(true))
+                    .catch(() => {});
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
     }, []);
 
     const toggleMute = () => {

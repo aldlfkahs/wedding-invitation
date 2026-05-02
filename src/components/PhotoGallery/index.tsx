@@ -213,9 +213,9 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                 >
                     {slides.map(({ idx, pos, key }) => (
                         <div
-                            className="photo-slide"
+                            className={`photo-slide ${pos === 0 ? 'is-current' : 'is-side'}`}
                             key={key}
-                            style={{ transform: `translate3d(${pos}%, 0, 0)` }}
+                            style={pos === 0 ? undefined : { transform: `translate3d(${pos}%, 0, 0)` }}
                         >
                             <img
                                 className="photo-large"
