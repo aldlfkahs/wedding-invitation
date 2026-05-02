@@ -6,23 +6,26 @@ interface PhotoGalleryProps {
 }
 
 const buildSrcSet = (src: string): string | undefined => {
-    const match = src.match(/^(.*)\.(webp|jpg|jpeg|png)$/i);
-    if (!match) return undefined;
-    const stem = match[1];
-    const ext = match[2];
-    return `${stem}-sm.${ext} 800w, ${stem}-md.${ext} 1200w, ${src} 1600w`;
+    const m = src.match(/^(.*)\.(webp|jpg|jpeg|png)$/i);
+    if (!m) return undefined;
+    return `${m[1]}-sm.${m[2]} 800w, ${m[1]}-md.${m[2]} 1200w, ${src} 1600w`;
 };
 
 const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [showControls, setShowControls] = useState(true);
-    const [dragOffsetPct, setDragOffsetPct] = useState(0);
+    const N = photos.length;
+
+    const [realIndex, setRealIndex] = useState(0);
+    const [shiftPct, setShiftPct] = useState(0); // -100 (next 진행) | 0 | 100 (prev 진행)
+    const [dragPct, setDragPct] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
+    const [withTransition, setWithTransition] = useState(true);
+    const [showControls, setShowControls] = useState(true);
 
     const viewerRef = useRef<HTMLDivElement | null>(null);
-    const touchStartXRef = useRef<number | null>(null);
-    const touchStartYRef = useRef<number | null>(null);
-    const isHorizontalRef = useRef<boolean | null>(null);
+    const touchStartX = useRef<number | null>(null);
+    const touchStartY = useRef<number | null>(null);
+    const isHorizontal = useRef<boolean | null>(null);
+    const animatingRef = useRef(false);
     const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const minSwipeDistance = 50;
@@ -42,80 +45,136 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         };
     }, []);
 
+    // 인접 사진 미리 디코딩
     useEffect(() => {
-        if (photos.length === 0) return;
-        const prev = currentIndex === 0 ? photos.length - 1 : currentIndex - 1;
-        const next = currentIndex === photos.length - 1 ? 0 : currentIndex + 1;
+        if (N === 0) return;
+        const prev = (realIndex - 1 + N) % N;
+        const next = (realIndex + 1) % N;
         [prev, next].forEach((i) => {
             const img = new Image();
             img.decoding = 'async';
             const ss = srcSets[i];
-            if (ss) img.srcset = ss;
+            if (ss) {
+                img.sizes = '(max-width: 768px) 100vw, 800px';
+                img.srcset = ss;
+            }
             img.src = photos[i];
         });
-    }, [currentIndex, photos, srcSets]);
+    }, [realIndex, photos, srcSets, N]);
 
-    const goToPrevious = () => {
-        if (photos.length <= 1) return;
-        setCurrentIndex((i) => (i === 0 ? photos.length - 1 : i - 1));
+    // 스냅(transition: none) 후 다음 paint에 다시 transition 활성화
+    useEffect(() => {
+        if (!withTransition) {
+            const id1 = requestAnimationFrame(() => {
+                const id2 = requestAnimationFrame(() => setWithTransition(true));
+                (id1 as unknown as { _next?: number })._next = id2;
+            });
+            return () => cancelAnimationFrame(id1);
+        }
+    }, [withTransition]);
+
+    const goNext = () => {
+        if (N <= 1 || animatingRef.current) return;
+        animatingRef.current = true;
+        setIsDragging(false);
+        setDragPct(0);
+        setWithTransition(true);
+        setShiftPct(-100);
         resetHideTimer();
     };
 
-    const goToNext = () => {
-        if (photos.length <= 1) return;
-        setCurrentIndex((i) => (i === photos.length - 1 ? 0 : i + 1));
+    const goPrev = () => {
+        if (N <= 1 || animatingRef.current) return;
+        animatingRef.current = true;
+        setIsDragging(false);
+        setDragPct(0);
+        setWithTransition(true);
+        setShiftPct(100);
         resetHideTimer();
+    };
+
+    // 페이지 dot은 곧장 점프 (인접하지 않을 수도 있어 애니메이션 생략)
+    const jumpTo = (i: number) => {
+        if (i === realIndex || animatingRef.current) return;
+        setWithTransition(false);
+        setShiftPct(0);
+        setDragPct(0);
+        setRealIndex(i);
+        resetHideTimer();
+    };
+
+    const handleTransitionEnd = (e: React.TransitionEvent) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.propertyName !== 'transform') return;
+
+        if (shiftPct === -100) {
+            setWithTransition(false);
+            setRealIndex((r) => (r + 1) % N);
+            setShiftPct(0);
+        } else if (shiftPct === 100) {
+            setWithTransition(false);
+            setRealIndex((r) => (r - 1 + N) % N);
+            setShiftPct(0);
+        }
+        animatingRef.current = false;
     };
 
     const handleTouchStart = (e: React.TouchEvent) => {
         resetHideTimer();
-        if (e.touches.length > 1) {
-            touchStartXRef.current = null;
-            touchStartYRef.current = null;
-            isHorizontalRef.current = false;
-            return;
-        }
-        touchStartXRef.current = e.touches[0].clientX;
-        touchStartYRef.current = e.touches[0].clientY;
-        isHorizontalRef.current = null;
+        if (animatingRef.current) return;
+        if (e.touches.length > 1) return;
+        touchStartX.current = e.touches[0].clientX;
+        touchStartY.current = e.touches[0].clientY;
+        isHorizontal.current = null;
         setIsDragging(true);
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (touchStartXRef.current === null || touchStartYRef.current === null) return;
-        const dx = e.touches[0].clientX - touchStartXRef.current;
-        const dy = e.touches[0].clientY - touchStartYRef.current;
-
-        if (isHorizontalRef.current === null) {
+        if (touchStartX.current === null || touchStartY.current === null) return;
+        const dx = e.touches[0].clientX - touchStartX.current;
+        const dy = e.touches[0].clientY - touchStartY.current;
+        if (isHorizontal.current === null) {
             if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
-                isHorizontalRef.current = Math.abs(dx) > Math.abs(dy);
+                isHorizontal.current = Math.abs(dx) > Math.abs(dy);
             }
         }
-
-        if (isHorizontalRef.current === true) {
-            const width = viewerRef.current?.clientWidth || window.innerWidth;
-            setDragOffsetPct((dx / width) * 100);
+        if (isHorizontal.current === true) {
+            const w = viewerRef.current?.clientWidth || window.innerWidth;
+            setDragPct((dx / w) * 100);
         }
     };
 
     const handleTouchEnd = () => {
-        const dragged = dragOffsetPct;
-        const wasHorizontal = isHorizontalRef.current === true;
-        setDragOffsetPct(0);
+        const dragged = dragPct;
+        const wasHorizontal = isHorizontal.current === true;
+        touchStartX.current = null;
+        touchStartY.current = null;
+        isHorizontal.current = null;
         setIsDragging(false);
-        touchStartXRef.current = null;
-        touchStartYRef.current = null;
-        isHorizontalRef.current = null;
 
-        if (!wasHorizontal) return;
+        if (!wasHorizontal) {
+            setDragPct(0);
+            return;
+        }
 
-        const width = viewerRef.current?.clientWidth || window.innerWidth;
-        const distancePx = (dragged / 100) * width;
-        if (distancePx < -minSwipeDistance) goToNext();
-        else if (distancePx > minSwipeDistance) goToPrevious();
+        const w = viewerRef.current?.clientWidth || window.innerWidth;
+        const distancePx = (dragged / 100) * w;
+
+        setDragPct(0);
+        setWithTransition(true);
+
+        if (N > 1 && distancePx < -minSwipeDistance) {
+            animatingRef.current = true;
+            setShiftPct(-100);
+        } else if (N > 1 && distancePx > minSwipeDistance) {
+            animatingRef.current = true;
+            setShiftPct(100);
+        }
+        // 임계 미달이면 shiftPct=0 유지 → drag offset이 0으로 부드럽게 복귀
+        resetHideTimer();
     };
 
-    if (photos.length === 0) {
+    if (N === 0) {
         return (
             <div className="photo-gallery">
                 <h2>우리의 아름다운 순간</h2>
@@ -124,7 +183,16 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         );
     }
 
-    const trackTransform = `translate3d(calc(${-currentIndex * 100}% + ${dragOffsetPct}%), 0, 0)`;
+    const prevIdx = (realIndex - 1 + N) % N;
+    const nextIdx = (realIndex + 1) % N;
+    const slides: { idx: number; pos: number; key: string }[] = [
+        { idx: prevIdx, pos: -100, key: `prev-${prevIdx}` },
+        { idx: realIndex, pos: 0, key: `cur-${realIndex}` },
+        { idx: nextIdx, pos: 100, key: `next-${nextIdx}` },
+    ];
+
+    const trackTransform = `translate3d(calc(${shiftPct}% + ${dragPct}%), 0, 0)`;
+    const trackClass = `photo-track ${(!withTransition || isDragging) ? 'no-transition' : ''}`;
 
     return (
         <div className="photo-gallery">
@@ -139,43 +207,42 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                 onTouchEnd={handleTouchEnd}
             >
                 <div
-                    className={`photo-track ${isDragging ? 'dragging' : ''}`}
+                    className={trackClass}
                     style={{ transform: trackTransform }}
+                    onTransitionEnd={handleTransitionEnd}
                 >
-                    {photos.map((src, i) => {
-                        const distance = Math.min(
-                            Math.abs(i - currentIndex),
-                            photos.length - Math.abs(i - currentIndex)
-                        );
-                        return (
-                            <div className="photo-slide" key={src}>
-                                <img
-                                    className="photo-large"
-                                    src={src}
-                                    srcSet={srcSets[i]}
-                                    sizes="(max-width: 768px) 100vw, 800px"
-                                    alt={`웨딩 사진 ${i + 1}`}
-                                    decoding="async"
-                                    loading={distance <= 1 ? 'eager' : 'lazy'}
-                                    draggable={false}
-                                />
-                            </div>
-                        );
-                    })}
+                    {slides.map(({ idx, pos, key }) => (
+                        <div
+                            className="photo-slide"
+                            key={key}
+                            style={{ transform: `translate3d(${pos}%, 0, 0)` }}
+                        >
+                            <img
+                                className="photo-large"
+                                src={photos[idx]}
+                                srcSet={srcSets[idx]}
+                                sizes="(max-width: 768px) 100vw, 800px"
+                                alt={`웨딩 사진 ${idx + 1}`}
+                                decoding="async"
+                                loading="eager"
+                                draggable={false}
+                            />
+                        </div>
+                    ))}
                 </div>
 
-                {photos.length > 1 && (
+                {N > 1 && (
                     <>
                         <button
                             className={`gallery-nav-btn gallery-nav-prev ${showControls ? 'visible' : 'hidden'}`}
-                            onClick={goToPrevious}
+                            onClick={goPrev}
                             aria-label="이전 사진"
                         >
                             ❮
                         </button>
                         <button
                             className={`gallery-nav-btn gallery-nav-next ${showControls ? 'visible' : 'hidden'}`}
-                            onClick={goToNext}
+                            onClick={goNext}
                             aria-label="다음 사진"
                         >
                             ❯
@@ -184,15 +251,15 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                 )}
             </div>
             <div className="photo-index" aria-live="polite">
-                {currentIndex + 1} / {photos.length}
+                {realIndex + 1} / {N}
             </div>
-            {photos.length > 1 && (
+            {N > 1 && (
                 <div className="page-indicators">
                     {photos.map((_, i) => (
                         <button
                             key={i}
-                            className={`page-dot ${i === currentIndex ? 'active' : ''}`}
-                            onClick={() => setCurrentIndex(i)}
+                            className={`page-dot ${i === realIndex ? 'active' : ''}`}
+                            onClick={() => jumpTo(i)}
                             aria-label={`${i + 1}번 사진`}
                         />
                     ))}
