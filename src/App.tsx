@@ -25,21 +25,36 @@ const App: React.FC = () => {
         )
         .catch(() => [] as string[]);
 
-      // 갤러리 체감 속도를 위해 전부 선로딩 후 렌더링
-      await Promise.all(
-        photoList.map(
-          (src) =>
-            new Promise<void>((resolve) => {
-              const img = new Image();
-              img.decoding = 'async';
-              img.src = src;
-              img.onload = () => resolve();
-              img.onerror = () => resolve();
-            })
-        )
-      );
-
+      // 갤러리는 즉시 렌더하고, 화면 폭에 맞는 변종을 우선 디코딩
       setPhotos(photoList);
+
+      const buildSrcSet = (src: string) => {
+        const m = src.match(/^(.*)\.(webp|jpg|jpeg|png)$/i);
+        return m ? `${m[1]}-sm.${m[2]} 800w, ${m[1]}-md.${m[2]} 1200w, ${src} 1600w` : '';
+      };
+      const sizes = '(max-width: 768px) 100vw, 800px';
+
+      const warm = (src: string) => {
+        const img = new Image();
+        img.decoding = 'async';
+        const ss = buildSrcSet(src);
+        // srcset/sizes를 함께 지정하면 브라우저가 화면에 맞는 변종(예: 모바일=‐sm)만 받아간다
+        if (ss) {
+          img.sizes = sizes;
+          img.srcset = ss;
+        }
+        img.src = src;
+      };
+
+      photoList.slice(0, 2).forEach(warm);
+
+      // 나머지는 idle 시간에 백그라운드 프리페치
+      const idle: (cb: () => void) => void =
+        (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
+          .requestIdleCallback || ((cb: () => void) => window.setTimeout(cb, 1500));
+      idle(() => {
+        photoList.slice(2).forEach(warm);
+      });
     };
 
     loadPhotos();

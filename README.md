@@ -84,6 +84,7 @@ const photos = [
 **중요 규칙**
 - `main.jpg`는 헤더 배경 전용 이미지이며, 포토갤러리에서는 자동 제외됩니다.
 - 포토갤러리에 표시할 파일 목록은 `public/images/manifest.json`에서 관리합니다.
+- 원본 사진을 추가/교체할 때는 public/images-src/에 두고 npm run optimize-images 실행
 
 ### 4. 계좌 정보 입력
 

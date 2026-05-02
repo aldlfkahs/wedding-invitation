@@ -163,16 +163,19 @@ const PhotoModal: React.FC<PhotoModalProps> = ({ photo, nextPhoto, onClose, onNe
                     &times;
                 </span>
                 <div className="modal-photo-container">
-                    <img 
+                    <img
                         className={`modal-photo current ${direction ? `slide-${direction}` : ''}`}
-                        src={photo} 
-                        alt="Wedding" 
+                        src={photo}
+                        alt="Wedding"
+                        decoding="async"
+                        loading="eager"
                     />
                     {nextPhoto && direction && (
-                        <img 
+                        <img
                             className={`modal-photo next from-${direction === 'left' ? 'right' : 'left'}`}
-                            src={nextPhoto} 
-                            alt="Wedding" 
+                            src={nextPhoto}
+                            alt="Wedding"
+                            decoding="async"
                         />
                     )}
                 </div>
