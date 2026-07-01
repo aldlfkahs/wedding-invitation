@@ -50,12 +50,11 @@ a {
     color: inherit;
 }
 
-/* ===== Snap Scroll ===== */
+/* ===== Scroll ===== */
 .snap-container {
     height: 100vh;
     width: 100%;
     overflow-y: scroll;
-    scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -71,33 +70,19 @@ a {
 }
 
 .snap-section {
-    height: 100vh;
-    scroll-snap-align: start;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
-    padding: 28px 0; /* breathing space above and below cards */
+    padding: 28px 0;
     box-sizing: border-box;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.snap-section:first-child {
-    opacity: 1;
-    transform: none;
-}
-
+/* 헤더는 커버 이미지로 전체 화면 유지 */
 .snap-header {
-    padding: 0; /* header makes full-bleed */
-}
-
-.snap-section.visible {
-    opacity: 1;
-    transform: translateY(0);
+    height: 100vh;
+    overflow: hidden;
+    padding: 0;
 }
 
 .container {
@@ -110,10 +95,6 @@ a {
 .invitation-message {
     padding: 50px 30px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 0;
-    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
     max-width: none;
     width: 100%;
 }
@@ -172,10 +153,6 @@ a {
 /* Location Styles */
 .location {
     padding: 30px 20px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 0;
-    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
     max-width: none;
     width: 100%;
 }
@@ -285,6 +262,96 @@ a {
     margin-top: 4px;
 }
 
+/* ===== 교통 안내 ===== */
+.transport-section {
+    width: 100%;
+}
+
+.transport-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #8B4789;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(139, 71, 137, 0.2);
+}
+
+.transport-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(139, 71, 137, 0.06);
+}
+
+.transport-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.transport-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    width: 22px;
+    text-align: center;
+    margin-top: 1px;
+}
+
+.transport-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.transport-mode {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #8B4789;
+    line-height: 1.2;
+}
+
+.transport-detail {
+    font-size: 0.83rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.transport-note {
+    font-size: 0.76rem;
+    color: #999;
+}
+
+/* 버스 종류별 2열 그리드 */
+.bus-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 8px;
+    align-items: baseline;
+    margin-top: 2px;
+}
+
+.bus-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fff;
+    background: #8B4789;
+    border-radius: 3px;
+    padding: 1px 5px;
+    white-space: nowrap;
+    align-self: start;
+    margin-top: 2px;
+}
+
+.bus-nums {
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.55;
+    word-break: keep-all;
+}
+
 @media (max-width: 420px) {
     .directions-grid {
         flex-direction: column;
@@ -292,99 +359,168 @@ a {
     }
 }
 
+.map-buttons-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.map-buttons-row .map-button {
+    flex: 1;
+    justify-content: center;
+}
+
 .map-button {
-    padding: 10px 20px;
+    padding: 6px 12px;
     border: none;
-    border-radius: 8px;
+    border-radius: 7px;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-family: 'Gowun Batang', serif;
 }
 
 .kakao-button {
     background: #FEE500;
     color: #000000;
-    box-shadow: 0 2px 8px rgba(254, 229, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(254, 229, 0, 0.3);
 }
 
 .kakao-button:hover {
     background: #FFDD00;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(254, 229, 0, 0.4);
 }
 
 .naver-button {
     background: #03C75A;
     color: white;
-    box-shadow: 0 2px 8px rgba(3, 199, 90, 0.3);
+    box-shadow: 0 2px 6px rgba(3, 199, 90, 0.3);
 }
 
 .naver-button:hover {
     background: #02B350;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(3, 199, 90, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(3, 199, 90, 0.4);
+}
+
+.tmap-button {
+    background: #0065FF;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0, 101, 255, 0.3);
+}
+
+.tmap-button:hover {
+    background: #0052CC;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 101, 255, 0.4);
 }
 
 /* Account Info Styles */
 .account-info {
-    padding: 40px 25px;
+    padding: 28px 20px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 0;
-    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
-    max-width: none;
     width: 100%;
 }
 
 .account-info h2 {
     font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: #8B4789;
+    font-weight: 600;
+}
+
+.account-desc {
+    font-size: 0.88rem;
+    color: #999;
     margin-bottom: 20px;
+}
+
+/* 신랑측 | 신부측 2컬럼 */
+.account-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    text-align: left;
+}
+
+.account-group-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     color: #8B4789;
-    font-weight: 600;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(139, 71, 137, 0.2);
 }
 
-.account-info h3 {
-    font-size: 1.2rem;
-    color: #8B4789;
-    font-weight: 600;
-}
-
-.account-info ul {
-    list-style: none;
-    padding: 0;
-    max-width: 400px;
-    margin: 15px auto;
-}
-
-.account-info li {
-    padding: 16px;
-    margin: 8px 0;
-    background: linear-gradient(135deg, #FFF5F7 0%, #FFE4E9 100%);
+/* 계좌 카드 (버튼) */
+.account-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background: rgba(255, 245, 247, 0.7);
+    border: 1px solid rgba(139, 71, 137, 0.12);
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(139, 71, 137, 0.1);
-    transition: all 0.3s;
     cursor: pointer;
+    text-align: left;
+    transition: background 0.2s, transform 0.15s;
+    font-family: 'Gowun Batang', serif;
 }
 
-.account-info li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(139, 71, 137, 0.2);
+.account-item:last-child {
+    margin-bottom: 0;
+}
+
+.account-item:active {
+    transform: scale(0.97);
+    background: rgba(255, 230, 240, 0.9);
+}
+
+.account-item.copied {
+    background: rgba(200, 240, 210, 0.8);
+    border-color: rgba(80, 180, 100, 0.3);
+}
+
+.account-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.account-bank-num {
+    font-size: 0.78rem;
+    color: #666;
+    word-break: break-all;
+}
+
+.account-copy-label {
+    font-size: 0.72rem;
+    color: #aaa;
+    margin-top: 2px;
+}
+
+.account-item.copied .account-copy-label {
+    color: #4caf50;
+}
+
+.account-closing {
+    margin-top: 18px;
+    font-size: 0.9rem;
+    color: #888;
 }
 
 /* Share Buttons Styles */
 .share-buttons {
     padding: 40px 20px;
     text-align: center;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 0;
-    box-shadow: 0 8px 32px rgba(139, 71, 137, 0.08);
     max-width: none;
     width: 100%;
 }
@@ -427,5 +563,23 @@ a {
 .invitation-message { padding: 36px 24px; }
 .location { padding: 22px 18px; }
 .account-info { padding: 28px 20px; }
-.photo-gallery { padding: 24px 0; }
 .share-buttons { padding: 24px 18px; }
+
+/* ===== Fade-in children animation ===== */
+/* 컴포넌트 루트에 fade-children 클래스를 붙이면 자식들이 순서대로 fade-in됩니다 */
+.fade-children > * {
+    opacity: 0;
+    transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* snap-section이 visible이 되면 자식들이 위→아래 순서로 등장 */
+.snap-section.visible .fade-children > *:nth-child(1)  { opacity: 1; transition-delay: 0s; }
+.snap-section.visible .fade-children > *:nth-child(2)  { opacity: 1; transition-delay: 0.2s; }
+.snap-section.visible .fade-children > *:nth-child(3)  { opacity: 1; transition-delay: 0.4s; }
+.snap-section.visible .fade-children > *:nth-child(4)  { opacity: 1; transition-delay: 0.6s; }
+.snap-section.visible .fade-children > *:nth-child(5)  { opacity: 1; transition-delay: 0.8s; }
+.snap-section.visible .fade-children > *:nth-child(6)  { opacity: 1; transition-delay: 1.0s; }
+.snap-section.visible .fade-children > *:nth-child(7)  { opacity: 1; transition-delay: 1.2s; }
+.snap-section.visible .fade-children > *:nth-child(8)  { opacity: 1; transition-delay: 1.4s; }
+.snap-section.visible .fade-children > *:nth-child(9)  { opacity: 1; transition-delay: 1.6s; }
+.snap-section.visible .fade-children > *:nth-child(10) { opacity: 1; transition-delay: 1.8s; }

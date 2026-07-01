@@ -100,44 +100,73 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
         window.open('https://map.naver.com/p/search/%EB%8D%94%EC%BB%A8%EB%B2%A4%EC%85%98%20%EC%86%A1%ED%8C%8C%EB%AC%B8%EC%A0%95/place/1958047921?c=15.00,0,0,0,dh&placePath=/home?entry=bmp&from=map&fromPanelNum=2&timestamp=202601011454&locale=ko&svcName=map_pcv5&searchText=%EB%8D%94%EC%BB%A8%EB%B2%A4%EC%85%98%20%EC%86%A1%ED%8C%8C%EB%AC%B8%EC%A0%95', '_blank');
     };
 
+    const openTmap = () => {
+        // 앱 딥링크로 더컨벤션 송파문정 길찾기 바로 열기
+        window.location.href = `tmap://route?goalname=${encodeURIComponent('더컨벤션 송파문정')}&goalx=127.122752&goaly=37.484123&goalrad=500`;
+    };
+
     return (
-        <div className="location">
+        <div className="location fade-children">
             {(mode === 'map' || mode === 'both') && (
                 <>
                     <h2>오시는 길</h2>
                     <div className="location-info">
-                        <h3>예식장 정보</h3>
-                        <p><strong>더컨벤션 송파문정</strong></p>
-                        <p><strong>주소:</strong> 서울 송파구 문정동 651-8 (NH송파농협 13층)</p>
-                        <p><strong>전화:</strong> 02-6418-5000</p>
+                        <p style={{ textAlign: 'center' }}><strong>더컨벤션 송파문정 (13F 아모르홀)</strong></p>
+                        <p style={{ textAlign: 'center' }}><strong>주소:</strong> 서울 송파구 문정동 651-8 (NH송파농협 13층)</p>
 
                         <div className="map">
-                            <div ref={mapRef} style={{ width: '100%', height: '200px', borderRadius: '12px' }}></div>
+                            <div ref={mapRef} style={{ width: '100%', height: '400px', borderRadius: '12px' }}></div>
                         </div>
 
-                        <div style={{ textAlign: 'center', marginTop: '8px', display: 'flex', gap: '12px', justifyContent: 'center' }}>
+                        <div className="map-buttons-row">
                             <button onClick={openKakaoMap} className="map-button kakao-button">카카오맵</button>
                             <button onClick={openNaverMap} className="map-button naver-button">네이버지도</button>
+                            <button onClick={openTmap} className="map-button tmap-button">티맵</button>
                         </div>
                     </div>
                 </>
             )}
 
             {(mode === 'directions' || mode === 'both') && (
-                <div className="location-info directions-only" style={{ marginTop: (mode === 'both' ? '18px' : '0') }}>
-                    <h3>대중교통 이용</h3>
-                    <p><strong>🚇 지하철:</strong> 8호선 문정역 1번 출구 도보 5분</p>
-                    <p><strong>🚌 버스:</strong></p>
-                    <ul className="bus-list">
-                        <li>간선: 341, 360번</li>
-                        <li>지선: 3217, 3414번</li>
-                        <li>광역: 1117, 9403번</li>
-                    </ul>
+                <div className="transport-section" style={{ marginTop: (mode === 'both' ? '14px' : '0') }}>
+                    {/* <h3 className="transport-title">교통 안내</h3> */}
 
-                    <h3>🚗 자가용 이용</h3>
-                    <p>네비게이션에 <strong>더컨벤션 송파문정</strong> 검색</p>
-                    <p>예식장 건물 지하 주차장 이용 가능 (2시간 무료)</p>
-                    <p className="parking-note">* 주차 공간이 협소하오니 가급적 대중교통을 이용해주시기 바랍니다.</p>
+                    {/* 자가용 */}
+                    <div className="transport-row">
+                        <span className="transport-icon">🚗</span>
+                        <div className="transport-body">
+                            <span className="transport-mode">자가용</span>
+                            <span className="transport-detail">네비: <strong>더컨벤션 송파문정</strong> 검색</span>
+                            <span className="transport-detail">주차: 건물 내 + 앞 건물 (2시간 무료, 확인필요)</span>
+                        </div>
+                    </div>
+                    {/* 지하철 */}
+                    <div className="transport-row">
+                        <span className="transport-icon">🚇</span>
+                        <div className="transport-body">
+                            <span className="transport-mode">지하철</span>
+                            <span className="transport-detail">8호선 문정역 3번 출구 도보 3분</span>
+                        </div>
+                    </div>
+
+                    {/* 버스 */}
+                    <div className="transport-row">
+                        <span className="transport-icon">🚌</span>
+                        <div className="transport-body">
+                            <span className="transport-mode">버스</span>
+                            <div className="bus-grid">
+                                <span className="bus-badge">일반</span>
+                                <span className="bus-nums">30, 31, 100, 331</span>
+                                <span className="bus-badge">간선</span>
+                                <span className="bus-nums">302, 303, 320, 333, 343, 345, 350, 360, 422, N13, N37</span>
+                                <span className="bus-badge">지선</span>
+                                <span className="bus-nums">3322, 3420</span>
+                                <span className="bus-badge">직행</span>
+                                <span className="bus-nums">1009, 1112, 1117, 1650, 500-1, 500-1A, 3302, 4305, G2100, G6009</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             )}
         </div>

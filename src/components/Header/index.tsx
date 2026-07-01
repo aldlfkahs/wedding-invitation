@@ -7,15 +7,15 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
     const weddingDate = "2026-10-17";
-    const weddingTime = "12:30";
-    const weddingLocation = "더컨벤션 송파문정 아모르홀";
+    const weddingTime = "12시 30분";
+    const weddingLocation = "더컨벤션 송파문정 13F 아모르홀";
 
     const [dday, setDday] = useState<number | null>(null);
     const [bgVisible, setBgVisible] = useState(false);
     const [contentVisible, setContentVisible] = useState(false);
 
     useEffect(() => {
-        const targetDate = new Date(weddingDate).getTime();
+        const targetDate = new Date("2026-10-17").getTime();
         const now = new Date().getTime();
         const diff = Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24));
         setDday(diff);
@@ -56,19 +56,25 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
                 className="hero-content"
                 style={{ opacity: contentVisible ? 1 : 0 }}
             >
-                <p className="hero-subtitle">Wedding Invitation</p>
-                <h1>결혼식 초대장</h1>
+                <p className="hero-subtitle">이승원 ❤️ 고정민</p>
+                <h1>결혼식에 초대합니다.</h1>
                 <div className="hero-divider">✦</div>
                 <div className="wedding-details">
-                    <p>{weddingDate}</p>
-                    <p>{weddingTime}</p>
+                    <p>{weddingDate} {weddingTime}</p>
                     <p>{weddingLocation}</p>
                 </div>
-                {dday !== null && (
+                {/* {dday !== null && (
                     <div className="dday-counter">
                         {dday > 0 ? `D-${dday}` : dday === 0 ? 'D-Day' : `D+${Math.abs(dday)}`}
                     </div>
-                )}
+                )} */}
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
             </div>
             <div
                 className="scroll-indicator"
@@ -81,3 +87,7 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
 };
 
 export default Header;
+
+
+
+// TODO: 배경 이미지와 텍스트를 별도의 레이어로 분리하여, 배경 이미지는 페이드인만 하고 텍스트는 나중에 페이드인하도록 수정. (배경 이미지가 먼저 나타나고, 텍스트가 나중에 나타나도록)

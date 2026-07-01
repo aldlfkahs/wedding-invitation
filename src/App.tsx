@@ -60,36 +60,25 @@ const App: React.FC = () => {
     loadPhotos();
   }, []);
 
-  // Intersection Observer for fade-in animations
+    // Intersection Observer for fade-in animations
   useEffect(() => {
-    const container = document.querySelector('.snap-container');
-    if (!container) return;
-
     const sections = document.querySelectorAll('.snap-section');
-
-    // First section always visible immediately
-    if (sections[0]) sections[0].classList.add('visible');
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
           }
         });
       },
-      { root: container, threshold: 0.1 }
+      { threshold: 0.15 }
     );
     sections.forEach((section) => observer.observe(section));
 
-    // Fallback: make all sections visible after 3s if observer fails
-    const fallback = setTimeout(() => {
-      sections.forEach((section) => section.classList.add('visible'));
-    }, 3000);
-
     return () => {
       observer.disconnect();
-      clearTimeout(fallback);
     };
   }, []);
 
@@ -110,12 +99,12 @@ const App: React.FC = () => {
         </section>
 
         <section className="snap-section">
-          <Location mode="map" />
+          <Location mode="both" />
         </section>
 
-        <section className="snap-section">
-          <Location mode="directions" />
-        </section>
+        {/* <section className="snap-section">
+          <Location mode="both" />
+        </section> */}
 
         <section className="snap-section">
           <AccountInfo />
