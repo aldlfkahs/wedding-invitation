@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: './', // GitHub Pages용 base 경로 추가
+  base: '/', // 커스텀 도메인 사용 시 루트 절대경로
   plugins: [react()],
   server: {
     port: 3000,
