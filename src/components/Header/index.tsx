@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
             >
                 <p className="hero-subtitle">이승원 ❤️ 고정민</p>
                 <h1>결혼식에 초대합니다.</h1>
-                <div className="hero-divider">✦</div>
+                {/* <div className="hero-divider">✦</div> */}
                 <div className="wedding-details">
                     <p>{weddingDate} {weddingTime}</p>
                     <p>{weddingLocation}</p>

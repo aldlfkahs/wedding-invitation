@@ -204,7 +204,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
 
     return (
         <div className="photo-gallery fade-children">
-            <h2>Gallery</h2>
+            <h2>갤러리</h2>
 
             {/* ─── 그리드 섹션 ─── */}
             <div className="photo-grid-section">
@@ -231,10 +231,15 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                     {!expanded && <div className="photo-grid-fade" />}
                 </div>
 
-                {!expanded && (
+                {!expanded ? (
                     <button className="photo-grid-more" onClick={() => setExpanded(true)}>
-                        <span>more</span>
+                        <span>더보기</span>
                         <span className="photo-grid-arrow">▼</span>
+                    </button>
+                ) : (
+                    <button className="photo-grid-more" onClick={() => setExpanded(false)}>
+                        <span>접기</span>
+                        <span className="photo-grid-arrow collapse">▲</span>
                     </button>
                 )}
             </div>

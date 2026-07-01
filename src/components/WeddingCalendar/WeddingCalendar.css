@@ -1,0 +1,141 @@
+.wedding-calendar {
+    width: 100%;
+    padding: 32px 20px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ── 헤더 ── */
+.cal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 22px;
+}
+
+.cal-deco {
+    font-size: 0.85rem;
+    color: #c9a0d0;
+    letter-spacing: 0.3em;
+    margin-bottom: 2px;
+}
+
+.cal-year-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: #b08bbd;
+    letter-spacing: 0.25em;
+}
+
+.cal-month-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #8B4789;
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+}
+
+/* ── 그리드 ── */
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px 0;
+    width: 100%;
+    max-width: 310px;
+    margin-bottom: 20px;
+}
+
+.cal-weekday {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #aaa;
+    letter-spacing: 0.04em;
+    padding-bottom: 8px;
+}
+.cal-weekday.sun { color: #d97070; }
+.cal-weekday.sat { color: #7090d9; }
+
+.cal-cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    min-height: 38px;
+}
+
+.cal-num {
+    font-size: 0.85rem;
+    color: #555;
+    line-height: 1;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.cal-cell.sun .cal-num { color: #d97070; }
+.cal-cell.sat .cal-num { color: #7090d9; }
+
+/* 결혼 날짜 강조 */
+.cal-cell.wedding .cal-num {
+    background: #8B4789;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(139, 71, 137, 0.35);
+}
+
+.cal-marker {
+    font-size: 0.5rem;
+    color: #8B4789;
+    margin-top: 2px;
+    line-height: 1;
+    animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1);   opacity: 1; }
+    50%       { transform: scale(1.4); opacity: 0.8; }
+}
+
+/* ── 날짜·시간 정보 ── */
+.cal-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(139, 71, 137, 0.15);
+    width: 100%;
+    max-width: 310px;
+}
+
+.cal-full-date {
+    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
+    font-size: 1rem;
+    color: #666;
+    letter-spacing: 0.04em;
+}
+
+.cal-time {
+    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #8B4789;
+    letter-spacing: 0.06em;
+}
+
+.cal-dday {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    color: #b08bbd;
+    letter-spacing: 0.12em;
+    font-family: 'Cormorant Garamond', serif;
+}

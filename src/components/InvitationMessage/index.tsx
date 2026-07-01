@@ -3,7 +3,8 @@ import React from 'react';
 const InvitationMessage: React.FC = () => {
     return (
         <div className="invitation-message fade-children">
-            <h2>결혼식에 초대합니다!</h2>
+            {/* <h2>결혼식에 초대합니다!</h2>1 */}
+                <h2 className="cal-deco">— ♡ —</h2>
             <p>10월의 맑은 하늘 아래, </p>
             <p>저희가 영원한 동반자로서의 첫걸음을 내딛으려 합니다.</p>
             <p>서로의 첫 상대가 되어 준 인연을 소중히 여기며,</p>

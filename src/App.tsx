@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import InvitationMessage from './components/InvitationMessage';
+import WeddingCalendar from './components/WeddingCalendar';
 import PhotoGallery from './components/PhotoGallery';
 import Location from './components/Location';
 import AccountInfo from './components/AccountInfo';
@@ -92,6 +93,10 @@ const App: React.FC = () => {
 
         <section className="snap-section">
           <InvitationMessage />
+        </section>
+
+        <section className="snap-section">
+          <WeddingCalendar />
         </section>
 
         <section className="snap-section">
