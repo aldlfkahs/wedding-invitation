@@ -34,7 +34,7 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
 
                 const mapOptions = {
                     center: location,
-                    zoom: 17,
+                    zoom: 16,
                     zoomControl: true,
                     zoomControlOptions: {
                         position: window.naver.maps.Position.TOP_RIGHT,
