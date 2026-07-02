@@ -562,7 +562,7 @@ a {
 
 .invitation-message { padding: 36px 24px; }
 .location { padding: 22px 18px; }
-.account-info { padding: 28px 20px; }
+.account-info { padding: 28px 20px max(80px, calc(28px + env(safe-area-inset-bottom, 0px))); }
 .share-buttons { padding: 24px 18px; }
 
 /* ===== Fade-in children animation ===== */
