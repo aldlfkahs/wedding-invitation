@@ -136,8 +136,8 @@ const Location: React.FC<LocationProps> = ({ mode = 'both' }) => {
                         <span className="transport-icon">🚗</span>
                         <div className="transport-body">
                             <span className="transport-mode">자가용</span>
-                            <span className="transport-detail">네비: <strong>더컨벤션 송파문정</strong> 검색</span>
-                            <span className="transport-detail">주차: 건물 내 + 앞 건물 (2시간 무료, 확인필요)</span>
+                            <span className="transport-detail">네비: <strong>더컨벤션 송파문정</strong> 검색 (주차 2시간 무료)</span>
+                            {/* <span className="transport-detail">주차: 식장 본 건물(NH 송파농협) (2시간 무료)</span> */}
                         </div>
                     </div>
                     {/* 지하철 */}

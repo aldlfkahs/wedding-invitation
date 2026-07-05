@@ -23,14 +23,14 @@
 }
 
 .cal-year-label {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Gowun Batang', serif;
     font-size: 1rem;
     color: #b08bbd;
     letter-spacing: 0.25em;
 }
 
 .cal-month-label {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Gowun Batang', serif;
     font-size: 2.4rem;
     font-weight: 600;
     color: #8B4789;
@@ -50,10 +50,11 @@
 
 .cal-weekday {
     text-align: center;
-    font-size: 0.7rem;
-    font-weight: 700;
+    font-family: 'Gowun Batang', serif;
+    font-size: 0.72rem;
+    font-weight: 400;
     color: #aaa;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     padding-bottom: 8px;
 }
 .cal-weekday.sun { color: #d97070; }
@@ -69,7 +70,9 @@
 }
 
 .cal-num {
+    font-family: 'Gowun Batang', serif;
     font-size: 0.85rem;
+    font-weight: 400;
     color: #555;
     line-height: 1;
     width: 28px;
@@ -87,7 +90,7 @@
 .cal-cell.wedding .cal-num {
     background: #8B4789;
     color: #fff;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 0.9rem;
     box-shadow: 0 2px 8px rgba(139, 71, 137, 0.35);
 }
@@ -118,14 +121,14 @@
 }
 
 .cal-full-date {
-    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
+    font-family: 'Gowun Batang', serif;
     font-size: 1rem;
     color: #666;
     letter-spacing: 0.04em;
 }
 
 .cal-time {
-    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
+    font-family: 'Gowun Batang', serif;
     font-size: 1.3rem;
     font-weight: 600;
     color: #8B4789;
@@ -137,5 +140,5 @@
     font-size: 0.85rem;
     color: #b08bbd;
     letter-spacing: 0.12em;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Gowun Batang', serif;
 }

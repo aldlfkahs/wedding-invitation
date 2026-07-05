@@ -57,10 +57,10 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
                 style={{ opacity: contentVisible ? 1 : 0 }}
             >
                 <p className="hero-subtitle">이승원 ❤️ 고정민</p>
-                <h1>결혼식에 초대합니다.</h1>
+                {/* <h1>결혼식에 초대합니다.</h1> */}
                 {/* <div className="hero-divider">✦</div> */}
                 <div className="wedding-details">
-                    <p>{weddingDate} {weddingTime}</p>
+                    <p>{weddingDate}    {weddingTime}</p>
                     <p>{weddingLocation}</p>
                 </div>
                 {/* {dday !== null && (
@@ -87,7 +87,3 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
 };
 
 export default Header;
-
-
-
-// TODO: 배경 이미지와 텍스트를 별도의 레이어로 분리하여, 배경 이미지는 페이드인만 하고 텍스트는 나중에 페이드인하도록 수정. (배경 이미지가 먼저 나타나고, 텍스트가 나중에 나타나도록)

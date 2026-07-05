@@ -93,7 +93,7 @@ a {
 
 /* Invitation Message Styles */
 .invitation-message {
-    padding: 50px 30px;
+    padding: 50px 8px;
     text-align: center;
     max-width: none;
     width: 100%;
@@ -108,22 +108,58 @@ a {
 
 .invitation-message p {
     margin: 12px 0;
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: #555;
     line-height: 2;
 }
 
 .invitation-message .family-line {
     margin-top: 18px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #666;
-    letter-spacing: 0.2px;
-    font-family: 'Cormorant Garamond', 'Gowun Batang', serif;
-    display: inline-grid;
-    grid-template-columns: auto auto;
-    column-gap: 12px;
-    row-gap: 6px;
-    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.invitation-message .message-divider {
+    height: 1px;
+    width: 100px;
+    background-color: #c9a0d0;
+    opacity: 0.6;
+    margin: 16px auto;
+}
+
+.invitation-message .family-item {
+    text-align: center;
+    line-height: 1.6;
+}
+
+.invitation-message .family-parent {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 4px;
+}
+
+.invitation-message .dot {
+    color: #777;
+}
+
+.invitation-message .family-relation {
+    color: #666;
+}
+
+.invitation-message .family-relation strong {
+    font-weight: 700;
+    color: #444;
+}
+
+.invitation-message .family-divider {
+    width: 1px;
+    height: 25px;
+    background-color: #c9a0d0;
+    opacity: 0.6;
 }
 
 .invitation-message .family-line strong {
