@@ -56,7 +56,10 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
                 className="hero-content"
                 style={{ opacity: contentVisible ? 1 : 0 }}
             >
-                <p className="hero-subtitle">이승원 ❤️ 고정민</p>
+                {/* <p className="hero-subtitle">이승원  고정민</p> */}
+                <h2 className="hero-names">
+                    SeungWon <span className="hero-names-ampersand">&amp;</span> JungMin
+                </h2>
                 {/* <h1>결혼식에 초대합니다.</h1> */}
                 {/* <div className="hero-divider">✦</div> */}
                 <div className="wedding-details">
