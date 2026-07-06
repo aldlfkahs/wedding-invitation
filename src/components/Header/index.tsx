@@ -63,7 +63,7 @@ const Header: React.FC<HeaderProps> = ({ onAnimationDone }) => {
                 {/* <h1>결혼식에 초대합니다.</h1> */}
                 {/* <div className="hero-divider">✦</div> */}
                 <div className="wedding-details">
-                    <p>{weddingDate}    {weddingTime}</p>
+                    <p>{weddingDate} <span style={{ margin: '0 6px' }}></span> {weddingTime}</p>
                     <p>{weddingLocation}</p>
                 </div>
                 {/* {dday !== null && (
