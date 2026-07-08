@@ -84,7 +84,22 @@ const photos = [
 **중요 규칙**
 - `main.jpg`는 헤더 배경 전용 이미지이며, 포토갤러리에서는 자동 제외됩니다.
 - 포토갤러리에 표시할 파일 목록은 `public/images/manifest.json`에서 관리합니다.
-- 원본 사진을 추가/교체할 때는 public/images-src/에 두고 npm run optimize-images 실행
+
+**사진 최적화 및 추가하는 방법**
+
+원본 사진을 추가하거나 교체할 때:
+
+1. 원본 사진을 `public/images-src/` 폴더에 추가합니다.
+2. 다음 명령어를 실행하여 이미지를 최적화하고 WebP로 변환합니다:
+
+```bash
+npm run optimize-images
+```
+
+**주의사항**
+- 스크립트 실행 시 `public/images/` 폴더의 기존 이미지들(main.webp 제외)이 삭제되고 새로 생성됩니다.
+- `images-src/` 의 원본 사진들은 파일명 순서로 자동 정렬되어 1.webp, 2.webp, ... 로 변환됩니다.
+- 각 이미지마다 3가지 크기(sm, md, full)로 최적화됩니다.
 
 ### 4. 계좌 정보 입력
 
