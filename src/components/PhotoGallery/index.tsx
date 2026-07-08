@@ -13,6 +13,8 @@ const buildSrcSet = (src: string): string | undefined => {
 
 const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
     const N = photos.length;
+    const minZoom = 1;
+    const maxZoom = 4;
 
     // 그리드 펼침 상태
     const [expanded, setExpanded] = useState(false);
@@ -31,11 +33,58 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
     const touchStartY = useRef<number | null>(null);
     const isHorizontalRef = useRef<boolean | null>(null);
     const animatingRef = useRef(false);
+    const panStartRef = useRef<{ x: number; y: number } | null>(null);
+    const pinchStartDistanceRef = useRef<number | null>(null);
+    const pinchStartScaleRef = useRef(1);
+    const pinchStartCenterRef = useRef<{ x: number; y: number } | null>(null);
+    const pinchStartOffsetRef = useRef({ x: 0, y: 0 });
+    const zoomScaleRef = useRef(1);
+    const zoomXRef = useRef(0);
+    const zoomYRef = useRef(0);
+    const [zoomScale, setZoomScale] = useState(1);
+    const [zoomX, setZoomX] = useState(0);
+    const [zoomY, setZoomY] = useState(0);
 
     // 스와이프 임계값 (px): 이 값 이상 밀어야 슬라이드 전환
     const minSwipeDistance = 80;
 
     const srcSets = useMemo(() => photos.map(buildSrcSet), [photos]);
+    const isZoomed = zoomScale > 1.01;
+
+    const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+    const getTouchDistance = (a: Touch, b: Touch) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    const getTouchCenter = (a: Touch, b: Touch) => ({
+        x: (a.clientX + b.clientX) / 2,
+        y: (a.clientY + b.clientY) / 2,
+    });
+
+    const clampOffset = (x: number, y: number, scale: number) => {
+        const width = viewerRef.current?.clientWidth || window.innerWidth;
+        const height = viewerRef.current?.clientHeight || window.innerHeight;
+        const maxX = ((scale - 1) * width) / 2;
+        const maxY = ((scale - 1) * height) / 2;
+        return {
+            x: clamp(x, -maxX, maxX),
+            y: clamp(y, -maxY, maxY),
+        };
+    };
+
+    const applyZoom = (scale: number, x: number, y: number) => {
+        zoomScaleRef.current = scale;
+        zoomXRef.current = x;
+        zoomYRef.current = y;
+        setZoomScale(scale);
+        setZoomX(x);
+        setZoomY(y);
+    };
+
+    const resetZoom = () => {
+        pinchStartDistanceRef.current = null;
+        pinchStartCenterRef.current = null;
+        panStartRef.current = null;
+        applyZoom(1, 0, 0);
+    };
 
     // 인접 사진 미리 디코딩
     useEffect(() => {
@@ -73,6 +122,10 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         const viewer = viewerRef.current;
         if (!viewer) return;
         const handleTouchMoveDOM = (e: TouchEvent) => {
+            if (e.touches.length > 1 || zoomScaleRef.current > 1.01) {
+                e.preventDefault();
+                return;
+            }
             if (touchStartX.current === null || touchStartY.current === null) return;
             const dx = e.touches[0].clientX - touchStartX.current;
             const dy = e.touches[0].clientY - touchStartY.current;
@@ -93,6 +146,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         setDragPct(0);
         setWithTransition(false);
         animatingRef.current = false;
+        resetZoom();
     };
 
     const closeLightbox = () => {
@@ -100,6 +154,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         setShiftPct(0);
         setDragPct(0);
         animatingRef.current = false;
+        resetZoom();
     };
 
     const goNext = () => {
@@ -128,17 +183,40 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
             setWithTransition(false);
             setLightboxIndex((r) => ((r ?? 0) + 1) % N);
             setShiftPct(0);
+            resetZoom();
         } else if (shiftPct === 100) {
             setWithTransition(false);
             setLightboxIndex((r) => ((r ?? 0) - 1 + N) % N);
             setShiftPct(0);
+            resetZoom();
         }
         animatingRef.current = false;
     };
 
     const handleTouchStart = (e: React.TouchEvent) => {
         if (animatingRef.current) return;
+        if (e.touches.length === 2) {
+            const [a, b] = [e.touches[0], e.touches[1]];
+            pinchStartDistanceRef.current = getTouchDistance(a, b);
+            pinchStartScaleRef.current = zoomScaleRef.current;
+            pinchStartCenterRef.current = getTouchCenter(a, b);
+            pinchStartOffsetRef.current = { x: zoomXRef.current, y: zoomYRef.current };
+            setIsDragging(false);
+            setDragPct(0);
+            touchStartX.current = null;
+            touchStartY.current = null;
+            isHorizontalRef.current = null;
+            panStartRef.current = null;
+            return;
+        }
         if (e.touches.length > 1) return;
+        if (isZoomed) {
+            panStartRef.current = {
+                x: e.touches[0].clientX,
+                y: e.touches[0].clientY,
+            };
+            return;
+        }
         touchStartX.current = e.touches[0].clientX;
         touchStartY.current = e.touches[0].clientY;
         isHorizontalRef.current = null;
@@ -146,6 +224,42 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
+        if (e.touches.length === 2 && pinchStartDistanceRef.current !== null) {
+            const [a, b] = [e.touches[0], e.touches[1]];
+            const distance = getTouchDistance(a, b);
+            const center = getTouchCenter(a, b);
+            if (pinchStartDistanceRef.current <= 0) return;
+            e.preventDefault();
+            const ratio = distance / pinchStartDistanceRef.current;
+            const nextScale = clamp(pinchStartScaleRef.current * ratio, minZoom, maxZoom);
+            const startCenter = pinchStartCenterRef.current ?? center;
+            const dx = center.x - startCenter.x;
+            const dy = center.y - startCenter.y;
+            const clampedOffset = clampOffset(
+                pinchStartOffsetRef.current.x + dx,
+                pinchStartOffsetRef.current.y + dy,
+                nextScale
+            );
+            applyZoom(nextScale, clampedOffset.x, clampedOffset.y);
+            return;
+        }
+        if (isZoomed) {
+            if (e.touches.length !== 1 || !panStartRef.current) return;
+            e.preventDefault();
+            const dx = e.touches[0].clientX - panStartRef.current.x;
+            const dy = e.touches[0].clientY - panStartRef.current.y;
+            panStartRef.current = {
+                x: e.touches[0].clientX,
+                y: e.touches[0].clientY,
+            };
+            const clampedOffset = clampOffset(
+                zoomXRef.current + dx,
+                zoomYRef.current + dy,
+                zoomScaleRef.current
+            );
+            applyZoom(zoomScaleRef.current, clampedOffset.x, clampedOffset.y);
+            return;
+        }
         if (touchStartX.current === null || touchStartY.current === null) return;
         const dx = e.touches[0].clientX - touchStartX.current;
         const dy = e.touches[0].clientY - touchStartY.current;
@@ -161,6 +275,16 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
     };
 
     const handleTouchEnd = () => {
+        if (pinchStartDistanceRef.current !== null) {
+            if (zoomScaleRef.current <= 1.01) {
+                resetZoom();
+            }
+            pinchStartDistanceRef.current = null;
+            pinchStartCenterRef.current = null;
+            return;
+        }
+        panStartRef.current = null;
+        if (isZoomed) return;
         const dragged = dragPct;
         const wasHorizontal = isHorizontalRef.current === true;
         touchStartX.current = null;
@@ -255,6 +379,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                         onTouchStart={handleTouchStart}
                         onTouchMove={handleTouchMove}
                         onTouchEnd={handleTouchEnd}
+                        onTouchCancel={handleTouchEnd}
                     >
                         <div
                             className={trackClass}
@@ -275,13 +400,14 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                                         decoding="async"
                                         loading="eager"
                                         draggable={false}
+                                        style={pos === 0 ? { transform: `translate3d(${zoomX}px, ${zoomY}px, 0) scale(${zoomScale})` } : undefined}
                                     />
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {N > 1 && (
+                    {N > 1 && !isZoomed && (
                         <>
                             <button className="lb-nav lb-prev" onClick={goPrev} aria-label="이전">❮</button>
                             <button className="lb-nav lb-next" onClick={goNext} aria-label="다음">❯</button>
