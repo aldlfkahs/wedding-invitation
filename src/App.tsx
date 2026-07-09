@@ -26,14 +26,16 @@ const App: React.FC = () => {
         )
         .catch(() => [] as string[]);
 
-      // 갤러리는 즉시 렌더하고, 썸네일(sm)만 우선 프리페치
+      // 갤러리는 즉시 렌더하고, sm + full 화질 모두 프리페치
       setPhotos(photoList);
 
       const toThumb = (src: string) => src.replace(/(\.\w+)$/, '-sm$1');
       const warm = (src: string) => {
-        const img = new Image();
-        img.decoding = 'async';
-        img.src = toThumb(src); // full 화질은 라이트박스 열릴 때 로드
+        [toThumb(src), src].forEach((url) => {
+          const img = new Image();
+          img.decoding = 'async';
+          img.src = url;
+        });
       };
 
       photoList.slice(0, 2).forEach(warm);
