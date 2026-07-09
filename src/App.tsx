@@ -29,21 +29,9 @@ const App: React.FC = () => {
       // 갤러리는 즉시 렌더하고, 화면 폭에 맞는 변종을 우선 디코딩
       setPhotos(photoList);
 
-      const buildSrcSet = (src: string) => {
-        const m = src.match(/^(.*)\.(webp|jpg|jpeg|png)$/i);
-        return m ? `${m[1]}-sm.${m[2]} 800w, ${m[1]}-md.${m[2]} 1200w, ${src} 1600w` : '';
-      };
-      const sizes = '(max-width: 768px) 100vw, 800px';
-
       const warm = (src: string) => {
         const img = new Image();
         img.decoding = 'async';
-        const ss = buildSrcSet(src);
-        // srcset/sizes를 함께 지정하면 브라우저가 화면에 맞는 변종(예: 모바일=‐sm)만 받아간다
-        if (ss) {
-          img.sizes = sizes;
-          img.srcset = ss;
-        }
         img.src = src;
       };
 

@@ -1,15 +1,9 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './PhotoGallery.css';
 
 interface PhotoGalleryProps {
     photos: string[];
 }
-
-const buildSrcSet = (src: string): string | undefined => {
-    const m = src.match(/^(.*)\.(webp|jpg|jpeg|png)$/i);
-    if (!m) return undefined;
-    return `${m[1]}-sm.${m[2]} 800w, ${m[1]}-md.${m[2]} 1200w, ${src} 1600w`;
-};
 
 const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
     const N = photos.length;
@@ -47,8 +41,6 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
 
     // 스와이프 임계값 (px): 이 값 이상 밀어야 슬라이드 전환
     const minSwipeDistance = 80;
-
-    const srcSets = useMemo(() => photos.map(buildSrcSet), [photos]);
     const isZoomed = zoomScale > 1.01;
 
     const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
@@ -94,14 +86,9 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         [prev, next].forEach((i) => {
             const img = new Image();
             img.decoding = 'async';
-            const ss = srcSets[i];
-            if (ss) {
-                img.sizes = '100vw';
-                img.srcset = ss;
-            }
             img.src = photos[i];
         });
-    }, [lightboxIndex, photos, srcSets, N]);
+    }, [lightboxIndex, photos, N]);
 
     // 스냅 후 다음 paint에서 transition 재활성화
     useEffect(() => {
@@ -342,8 +329,6 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                             >
                                 <img
                                     src={src}
-                                    srcSet={srcSets[i]}
-                                    sizes="(max-width: 430px) 25vw, 107px"
                                     alt={`웨딩 사진 ${i + 1}`}
                                     decoding="async"
                                     loading={i < 8 ? 'eager' : 'lazy'}
@@ -394,8 +379,6 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                                 >
                                     <img
                                         src={photos[idx]}
-                                        srcSet={srcSets[idx]}
-                                        sizes="100vw"
                                         alt={`웨딩 사진 ${idx + 1}`}
                                         decoding="async"
                                         loading="eager"

@@ -6,11 +6,9 @@ import sharp from 'sharp';
 const SRC_DIR = 'public/images-src';
 const OUT_DIR = 'public/images';
 
-const VARIANTS = [
-    { suffix: '-sm', width: 800, quality: 72 },
-    { suffix: '-md', width: 1200, quality: 76 },
-    { suffix: '',    width: 1600, quality: 78 },
-];
+// quality: 1-100, 높을수록 화질 좋음 (파일 크기 증가)
+// 원본 해상도를 그대로 유지하면서 WebP로 변환
+const QUALITY = 88;
 
 const SUPPORTED = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
@@ -54,19 +52,16 @@ async function main() {
             continue;
         }
 
-        for (const v of VARIANTS) {
-            const outName = `${stem}${v.suffix}.webp`;
-            const outPath = join(OUT_DIR, outName);
-            await sharp(inputPath)
-                .rotate()
-                .resize({ width: v.width, withoutEnlargement: true })
-                .webp({ quality: v.quality })
-                .toFile(outPath);
-            const outSize = (await stat(outPath)).size;
-            totalOut += outSize;
-            console.log(`  ${outName.padEnd(14)} ${(inSize/1024/1024).toFixed(2)}MB → ${(outSize/1024).toFixed(0)}KB`);
-        }
-        galleryFiles.push(`${stem}.webp`);
+        const outName = `${stem}.webp`;
+        const outPath = join(OUT_DIR, outName);
+        await sharp(inputPath)
+            .rotate()
+            .webp({ quality: QUALITY })
+            .toFile(outPath);
+        const outSize = (await stat(outPath)).size;
+        totalOut += outSize;
+        console.log(`  ${outName.padEnd(14)} ${(inSize/1024/1024).toFixed(2)}MB → ${(outSize/1024).toFixed(0)}KB`);
+        galleryFiles.push(outName);
     }
 
     galleryFiles.sort((a, b) => {
