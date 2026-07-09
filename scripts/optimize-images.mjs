@@ -7,8 +7,9 @@ const SRC_DIR = 'public/images-src';
 const OUT_DIR = 'public/images';
 
 // quality: 1-100, 높을수록 화질 좋음 (파일 크기 증가)
-// 원본 해상도를 그대로 유지하면서 WebP로 변환
-const QUALITY = 95;
+const SM_WIDTH   = 800;   // 갤러리 썸네일 폭
+const SM_QUALITY = 50;    // 갤러리 썸네일 화질
+const LB_QUALITY = 95;    // 라이트박스(확대) 화질, 원본 해상도 유지
 
 const SUPPORTED = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
@@ -52,16 +53,30 @@ async function main() {
             continue;
         }
 
-        const outName = `${stem}.webp`;
-        const outPath = join(OUT_DIR, outName);
+        // 갤러리 썸네일 (-sm)
+        const smName = `${stem}-sm.webp`;
+        const smPath = join(OUT_DIR, smName);
         await sharp(inputPath)
             .rotate()
-            .webp({ quality: QUALITY })
-            .toFile(outPath);
-        const outSize = (await stat(outPath)).size;
-        totalOut += outSize;
-        console.log(`  ${outName.padEnd(14)} ${(inSize/1024/1024).toFixed(2)}MB → ${(outSize/1024).toFixed(0)}KB`);
-        galleryFiles.push(outName);
+            .resize({ width: SM_WIDTH, withoutEnlargement: true })
+            .webp({ quality: SM_QUALITY })
+            .toFile(smPath);
+        const smSize = (await stat(smPath)).size;
+        totalOut += smSize;
+        console.log(`  ${smName.padEnd(16)} ${(inSize/1024/1024).toFixed(2)}MB → ${(smSize/1024).toFixed(0)}KB`);
+
+        // 라이트박스 전체 화질 (원본 해상도 유지)
+        const lbName = `${stem}.webp`;
+        const lbPath = join(OUT_DIR, lbName);
+        await sharp(inputPath)
+            .rotate()
+            .webp({ quality: LB_QUALITY })
+            .toFile(lbPath);
+        const lbSize = (await stat(lbPath)).size;
+        totalOut += lbSize;
+        console.log(`  ${lbName.padEnd(16)} ${(inSize/1024/1024).toFixed(2)}MB → ${(lbSize/1024).toFixed(0)}KB`);
+
+        galleryFiles.push(lbName);
     }
 
     galleryFiles.sort((a, b) => {

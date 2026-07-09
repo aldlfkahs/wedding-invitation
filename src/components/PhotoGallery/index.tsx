@@ -5,6 +5,9 @@ interface PhotoGalleryProps {
     photos: string[];
 }
 
+// manifest.json의 "1.webp" → 갤러리 썸네일 "1-sm.webp"
+const toThumb = (src: string) => src.replace(/(\.\w+)$/, '-sm$1');
+
 const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
     const N = photos.length;
     const minZoom = 1;
@@ -78,15 +81,15 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
         applyZoom(1, 0, 0);
     };
 
-    // 인접 사진 미리 디코딩
+    // 라이트박스가 열린 순간부터 인접 full 화질 사진 프리로드
     useEffect(() => {
         if (lightboxIndex === null || N === 0) return;
         const prev = (lightboxIndex - 1 + N) % N;
         const next = (lightboxIndex + 1) % N;
-        [prev, next].forEach((i) => {
+        [lightboxIndex, prev, next].forEach((i) => {
             const img = new Image();
             img.decoding = 'async';
-            img.src = photos[i];
+            img.src = photos[i]; // full 화질
         });
     }, [lightboxIndex, photos, N]);
 
@@ -328,7 +331,7 @@ const PhotoGallery: React.FC<PhotoGalleryProps> = ({ photos }) => {
                                 onClick={() => openLightbox(i)}
                             >
                                 <img
-                                    src={src}
+                                    src={toThumb(src)}
                                     alt={`웨딩 사진 ${i + 1}`}
                                     decoding="async"
                                     loading={i < 8 ? 'eager' : 'lazy'}

@@ -100,25 +100,24 @@ npm run optimize-images
 ```
 
 **실행 후 결과:**
-- `public/images/` 폴더에 `1.webp`, `2.webp`, ... (원본 해상도 유지)
+- `1-sm.webp`, `2-sm.webp`, ... — 갤러리 그리드용 저화질 썸네일 (빠른 로딩)
+- `1.webp`, `2.webp`, ... — 라이트박스 확대용 고화질 (클릭 시 그때 다운로드)
 - `manifest.json` (갤러리에 표시할 이미지 목록)이 생성됩니다.
 
 #### Step 3: 압축 수준 조절 (선택사항)
 
-**파일**: `scripts/optimize-images.mjs` 10번째 줄
+**파일**: `scripts/optimize-images.mjs` 상단
 
 ```javascript
-// quality: 1-100, 높을수록 화질 좋음 (파일 크기 증가)
-const QUALITY = 88;
+const SM_WIDTH   = 800;   // 갤러리 썸네일 폭
+const SM_QUALITY = 72;    // 갤러리 썸네일 화질 (낮을수록 용량 ↓)
+const LB_QUALITY = 88;    // 라이트박스(확대) 화질 (높을수록 선명, 용량 ↑)
 ```
-
-- 88 기준: 원본 대비 약 16% 수준으로 압축, 확대해도 깨지지 않는 고화질 유지
-- 더 줄이고 싶으면 70~80, 원본에 더 가깝게 하려면 92~95
 
 #### 주의사항
 - 스크립트 실행 시 `public/images/` 폴더의 기존 이미지들(main.webp 제외)이 **삭제되고 새로 생성**됩니다.
 - `images-src/` 의 원본 사진들은 **파일명 순서로 자동 정렬**되어 1.webp, 2.webp, ... 로 변환됩니다.
-- 예시: 196MB의 원본 이미지가 약 32MB로 압축됩니다. (quality 88 기준)
+- 예시: 196MB의 원본 이미지가 약 33MB로 압축됩니다.
 
 ### 4. 계좌 정보 입력
 
