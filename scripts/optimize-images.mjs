@@ -8,7 +8,7 @@ const OUT_DIR = 'public/images';
 
 // quality: 1-100, 높을수록 화질 좋음 (파일 크기 증가)
 // 원본 해상도를 그대로 유지하면서 WebP로 변환
-const QUALITY = 88;
+const QUALITY = 95;
 
 const SUPPORTED = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
