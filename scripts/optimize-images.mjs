@@ -9,7 +9,7 @@ const OUT_DIR = 'public/images';
 // quality: 1-100, 높을수록 화질 좋음 (파일 크기 증가)
 const SM_WIDTH   = 800;   // 갤러리 썸네일 폭
 const SM_QUALITY = 50;    // 갤러리 썸네일 화질
-const LB_QUALITY = 95;    // 라이트박스(확대) 화질, 원본 해상도 유지
+const LB_QUALITY = 90;    // 라이트박스(확대) 화질, 원본 해상도 유지
 
 const SUPPORTED = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
