@@ -15,14 +15,14 @@ const groups: AccountGroup[] = [
     {
         side: '신랑측',
         accounts: [
-            { name: '이상욱, 윤주희', bank: '국민', number: '837-21-0322-792' },
+            { name: '이상욱•윤주희', bank: '국민', number: '837-21-0322-792' },
             { name: '이승원', bank: '신한', number: '110-093-365937' },
         ],
     },
     {
         side: '신부측',
         accounts: [
-            { name: '고찬주, 임인숙', bank: '신한', number: '110-171-196166' },
+            { name: '고찬주•임인숙', bank: '신한', number: '110-171-196166' },
             { name: '고정민', bank: '하나', number: '253-890629-80607' },
         ],
     },
