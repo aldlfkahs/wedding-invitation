@@ -532,6 +532,10 @@ a {
     color: #333;
 }
 
+.account-name .dot {
+    color: #777;
+}
+
 .account-bank-num {
     font-size: 0.78rem;
     color: #666;

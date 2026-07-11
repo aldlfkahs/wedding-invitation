@@ -15,14 +15,14 @@ const groups: AccountGroup[] = [
     {
         side: '신랑측',
         accounts: [
-            { name: '이상욱•윤주희', bank: '국민', number: '837-21-0322-792' },
+            { name: '이상욱 • 윤주희', bank: '국민', number: '837-21-0322-792' },
             { name: '이승원', bank: '신한', number: '110-093-365937' },
         ],
     },
     {
         side: '신부측',
         accounts: [
-            { name: '고찬주•임인숙', bank: '신한', number: '110-171-196166' },
+            { name: '고찬주 • 임인숙', bank: '신한', number: '110-171-196166' },
             { name: '고정민', bank: '하나', number: '253-890629-80607' },
         ],
     },
@@ -30,6 +30,17 @@ const groups: AccountGroup[] = [
 
 const AccountInfo: React.FC = () => {
     const [copied, setCopied] = useState<string | null>(null);
+
+    const renderAccountName = (name: string) => {
+        const parts = name.split('•');
+        if (parts.length !== 2) return name;
+
+        return (
+            <>
+                {parts[0].trim()} <span className="dot">•</span> {parts[1].trim()}
+            </>
+        );
+    };
 
     const handleCopy = (acc: Account) => {
         const text = `${acc.bank} ${acc.number}`;
@@ -55,7 +66,7 @@ const AccountInfo: React.FC = () => {
                                 onClick={() => handleCopy(acc)}
                                 aria-label={`${acc.name} 계좌번호 복사`}
                             >
-                                <span className="account-name">{acc.name}</span>
+                                <span className="account-name">{renderAccountName(acc.name)}</span>
                                 <span className="account-bank-num">{acc.bank} {acc.number}</span>
                                 <span className="account-copy-label">
                                     {copied === acc.name ? '복사됨 ✓' : '클릭하여 복사'}
