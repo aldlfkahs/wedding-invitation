@@ -6,7 +6,6 @@
 
 html {
     height: 100%;
-    overflow: hidden;
 }
 
 body {
@@ -24,7 +23,6 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    overflow: hidden;
 }
 
 #root {
@@ -537,7 +535,7 @@ a {
 }
 
 .account-bank-num {
-    font-size: 0.78rem;
+    font-size: 0.73rem;
     color: #666;
     word-break: break-all;
 }
